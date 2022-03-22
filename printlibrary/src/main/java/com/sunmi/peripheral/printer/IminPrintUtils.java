@@ -1,5 +1,6 @@
 package com.sunmi.peripheral.printer;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -50,6 +51,7 @@ public class IminPrintUtils {
     };
 
     /**
+     *
      * init sunmi print service
      */
     public void initSunmiPrinterService(Context context) {
@@ -482,7 +484,21 @@ public class IminPrintUtils {
             sunmiPrinterService.sendLCDFillString("SUNMI", 16, true, new InnerLcdCallback() {
                 @Override
                 public void onRunResult(boolean show) throws RemoteException {
-                    //TODO handle result
+                }
+
+                @Override
+                public void onReturnString(String result) throws RemoteException {
+
+                }
+
+                @Override
+                public void onRaiseException(int code, String msg) throws RemoteException {
+
+                }
+
+                @Override
+                public void onPrintResult(int code, String msg) throws RemoteException {
+
                 }
             });
         } catch (RemoteException e) {
@@ -507,6 +523,21 @@ public class IminPrintUtils {
                 @Override
                 public void onRunResult(boolean show) throws RemoteException {
                     //TODO handle result
+                }
+
+                @Override
+                public void onReturnString(String result) throws RemoteException {
+
+                }
+
+                @Override
+                public void onRaiseException(int code, String msg) throws RemoteException {
+
+                }
+
+                @Override
+                public void onPrintResult(int code, String msg) throws RemoteException {
+
                 }
             });
         } catch (RemoteException e) {
@@ -2273,5 +2304,25 @@ public class IminPrintUtils {
             e.printStackTrace();
         }
         return 100;
+    }
+    public void initBluePrinterCallBack(int anInt, BluetoothDevice device, InnerResultCallback callback) {
+        if (sunmiPrinterService == null) {
+            return ;
+        }
+        try {
+            sunmiPrinterService.initBluePrinterCallBack(anInt,device,callback);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    public void initBluePrinter(int anInt, BluetoothDevice device) {
+        if (sunmiPrinterService == null) {
+            return ;
+        }
+        try {
+            sunmiPrinterService.initBluePrinter(anInt,device);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 }

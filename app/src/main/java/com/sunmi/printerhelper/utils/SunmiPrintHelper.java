@@ -659,7 +659,7 @@ public class SunmiPrintHelper {
             Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sunmi);
             sunmiPrinterService.printBitmap(bitmap, null);
             sunmiPrinterService.lineWrap(1, null);
-            sunmiPrinterService.setAlignment(0, null);
+            sunmiPrinterService.setAlignment(1, null);
             try {
                 sunmiPrinterService.setPrinterStyle(WoyouConsts.SET_LINE_SPACING, 0);
             } catch (RemoteException e) {
