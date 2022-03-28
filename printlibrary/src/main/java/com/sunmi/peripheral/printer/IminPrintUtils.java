@@ -1566,7 +1566,31 @@ public class IminPrintUtils {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+
     }
+
+    public void setBarCodeHeightCallBack(int anInt, InnerResultCallback callback) {
+        if (sunmiPrinterService == null) {
+            return;
+        }
+        try {
+            sunmiPrinterService.setBarCodeHeightCallBack(anInt, callback);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setBarCodeHeight(int anInt) {
+        if (sunmiPrinterService == null) {
+            return;
+        }
+        try {
+            sunmiPrinterService.setBarCodeHeight(anInt);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setBarCodeContentPrintPosCallBack(int anInt, InnerResultCallback callback) {
         if (sunmiPrinterService == null) {
             return;
@@ -2324,5 +2348,67 @@ public class IminPrintUtils {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
+    }
+    public void printBMPBitmapCallBack(Bitmap bitmap, InnerResultCallback callback) {
+        if (sunmiPrinterService == null) {
+            return ;
+        }
+        try {
+            sunmiPrinterService.printBMPBitmapCallBack(bitmap,callback);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    public void printBMPBitmap(Bitmap bitmap) {
+        if (sunmiPrinterService == null) {
+            return ;
+        }
+        try {
+            sunmiPrinterService.printBMPBitmap(bitmap);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    public void printNvBitmapCallBack(int anInt,InnerResultCallback callback) {
+        if (sunmiPrinterService == null) {
+            return ;
+        }
+        try {
+            sunmiPrinterService.printNvBitmapCallBack(anInt,callback);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    public void printNvBitmap(int anInt) {
+        if (sunmiPrinterService == null) {
+            return ;
+        }
+        try {
+            sunmiPrinterService.printNvBitmap(anInt);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+    }
+    public boolean setDownloadNvBmpCallBack(String loadPath,InnerResultCallback callback) {
+        if (sunmiPrinterService == null) {
+            return false;
+        }
+        try {
+            return sunmiPrinterService.setDownloadNvBmpCallBack(loadPath,callback);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public boolean setDownloadNvBmp(String loadPath) {
+        if (sunmiPrinterService == null) {
+            return false;
+        }
+        try {
+           return sunmiPrinterService.setDownloadNvBmp(loadPath);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

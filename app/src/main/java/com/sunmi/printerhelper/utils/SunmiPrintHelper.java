@@ -654,12 +654,12 @@ public class SunmiPrintHelper {
         try {
             int paper = sunmiPrinterService.getPrinterPaper();
             sunmiPrinterService.printerInit(null);
-            sunmiPrinterService.setAlignment(1, null);
+            sunmiPrinterService.setAlignment(0, null);
             sunmiPrinterService.printText("测试样张\n", null);
             Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sunmi);
             sunmiPrinterService.printBitmap(bitmap, null);
             sunmiPrinterService.lineWrap(1, null);
-            sunmiPrinterService.setAlignment(1, null);
+            sunmiPrinterService.setAlignment(0, null);
             try {
                 sunmiPrinterService.setPrinterStyle(WoyouConsts.SET_LINE_SPACING, 0);
             } catch (RemoteException e) {

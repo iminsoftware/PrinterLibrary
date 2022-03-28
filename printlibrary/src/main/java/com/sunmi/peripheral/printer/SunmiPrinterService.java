@@ -656,6 +656,14 @@ public interface SunmiPrinterService extends IInterface {
      */
     public void initBluePrinter(int anInt, BluetoothDevice device) throws RemoteException;
 
+    public void printBMPBitmap(Bitmap bitmap) throws android.os.RemoteException;
+    public void printBMPBitmapCallBack(Bitmap bitmap,ICallback callback) throws android.os.RemoteException;
+
+    public void printNvBitmap(int position) throws android.os.RemoteException;
+    public void printNvBitmapCallBack(int position,ICallback callback) throws android.os.RemoteException;
+
+    public boolean setDownloadNvBmp(String loadPath) throws android.os.RemoteException;
+    public boolean setDownloadNvBmpCallBack(String loadPath,ICallback callback) throws android.os.RemoteException;
 
     public abstract static class Stub extends Binder implements SunmiPrinterService {
         private static final String DESCRIPTOR = "woyou.aidlservice.jiuiv5.IWoyouService";
@@ -824,6 +832,12 @@ public interface SunmiPrinterService extends IInterface {
         static final int TRANSACTION_initBluePrinterCallBack = (IBinder.FIRST_CALL_TRANSACTION + 156);
         static final int TRANSACTION_initBluePrinter = (IBinder.FIRST_CALL_TRANSACTION + 157);
         static final int TRANSACTION_printColumnsTextWithSize = (IBinder.FIRST_CALL_TRANSACTION + 158);
+        static final int TRANSACTION_printBMPBitmap = (android.os.IBinder.FIRST_CALL_TRANSACTION + 159);
+        static final int TRANSACTION_printBMPBitmapCallBack = (android.os.IBinder.FIRST_CALL_TRANSACTION + 160);
+        static final int TRANSACTION_printNvBitmap = (android.os.IBinder.FIRST_CALL_TRANSACTION + 161);
+        static final int TRANSACTION_printNvBitmapCallBack = (android.os.IBinder.FIRST_CALL_TRANSACTION + 162);
+        static final int TRANSACTION_setDownloadNvBmp = (android.os.IBinder.FIRST_CALL_TRANSACTION + 163);
+        static final int TRANSACTION_setDownloadNvBmpCallBack = (android.os.IBinder.FIRST_CALL_TRANSACTION + 164);
 
         public Stub() {
             this.attachInterface(this, DESCRIPTOR);
@@ -2450,8 +2464,81 @@ public interface SunmiPrinterService extends IInterface {
                     reply.writeNoException();
                     return true;
                 }
+                case TRANSACTION_printBMPBitmapCallBack:
+                {
+                    data.enforceInterface(DESCRIPTOR);
 
+                    Bitmap _arg1;
+                    if ((0!=data.readInt())) {
+                        _arg1 = Bitmap.CREATOR.createFromParcel(data);
+                    }
+                    else {
+                        _arg1 = null;
+                    }
+                    InnerResultCallback _arg2;
+                    _arg2 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    this.printBMPBitmapCallBack(_arg1, _arg2);
+                    reply.writeNoException();
+                    return true;
+                }
+                case TRANSACTION_printBMPBitmap:
+                {
+                    data.enforceInterface(DESCRIPTOR);
+                    Bitmap _arg1;
+                    if ((0!=data.readInt())) {
+                        _arg1 = Bitmap.CREATOR.createFromParcel(data);
+                    }
+                    else {
+                        _arg1 = null;
+                    }
+                    this.printBMPBitmap(_arg1);
+                    reply.writeNoException();
+                    return true;
+                }
+                case TRANSACTION_printNvBitmapCallBack:
+                {
+                    data.enforceInterface(DESCRIPTOR);
+                    int _arg0;
+                    _arg0 = data.readInt();
 
+                    InnerResultCallback _arg2;
+                    _arg2 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    this.printNvBitmapCallBack(_arg0,_arg2);
+                    reply.writeNoException();
+                    return true;
+                }
+                case TRANSACTION_printNvBitmap:
+                {
+                    data.enforceInterface(DESCRIPTOR);
+                    int _arg0;
+                    _arg0 = data.readInt();
+
+                    this.printNvBitmap(_arg0);
+                    reply.writeNoException();
+                    return true;
+                }
+                case TRANSACTION_setDownloadNvBmpCallBack:
+                {
+                    data.enforceInterface(DESCRIPTOR);
+                    String _arg0;
+                    _arg0 = data.readString();
+
+                    InnerResultCallback _arg2;
+                    _arg2 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    this.setDownloadNvBmpCallBack(_arg0,_arg2);
+                    reply.writeNoException();
+                    return true;
+                }
+                case TRANSACTION_setDownloadNvBmp:
+                {
+                    data.enforceInterface(DESCRIPTOR);
+                    String _arg0;
+                    _arg0 = data.readString();
+
+                    this.setDownloadNvBmp(_arg0);
+                    reply.writeNoException();
+                    return true;
+                }
 //////////////////////////////
                 case 1598968902:
                     reply.writeString(DESCRIPTOR);
@@ -6340,6 +6427,146 @@ public interface SunmiPrinterService extends IInterface {
                     _reply.recycle();
                     _data.recycle();
                 }
+            }
+
+            @Override
+            public void printBMPBitmap(Bitmap bitmap) throws RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+
+                    if ((bitmap!=null)) {
+                        _data.writeInt(1);
+                        bitmap.writeToParcel(_data, 0);
+                    }
+                    else {
+                        _data.writeInt(0);
+                    }
+                    boolean _status = mRemote.transact(Stub.TRANSACTION_printBMPBitmap, _data, _reply, 0);
+                    if (!_status ) {
+                        throw new InnerPrinterException("this version does not support this method!");
+                    }
+                    _reply.readException();
+                }
+                finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+            }
+
+            @Override
+            public void printBMPBitmapCallBack(Bitmap bitmap, ICallback callback) throws RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    if ((bitmap!=null)) {
+                        _data.writeInt(1);
+                        bitmap.writeToParcel(_data, 0);
+                    }
+                    else {
+                        _data.writeInt(0);
+                    }
+                    _data.writeStrongBinder((((callback!=null))?(callback.asBinder()):(null)));
+                    boolean _status = mRemote.transact(Stub.TRANSACTION_printBMPBitmapCallBack, _data, _reply, 0);
+                    if (!_status ) {
+                        throw new InnerPrinterException("this version does not support this method!");
+                    }
+                    _reply.readException();
+                }
+                finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+            }
+
+            @Override
+            public void printNvBitmap(int anInt) throws RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeInt(anInt);
+
+                    boolean _status = mRemote.transact(Stub.TRANSACTION_printNvBitmap, _data, _reply, 0);
+                    if (!_status ) {
+                        throw new InnerPrinterException("this version does not support this method!");
+                    }
+                    _reply.readException();
+                }
+                finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+            }
+
+            @Override
+            public void printNvBitmapCallBack(int anInt, ICallback callback) throws RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeInt(anInt);
+
+                    _data.writeStrongBinder((((callback!=null))?(callback.asBinder()):(null)));
+                    boolean _status = mRemote.transact(Stub.TRANSACTION_printNvBitmapCallBack, _data, _reply, 0);
+                    if (!_status ) {
+                        throw new InnerPrinterException("this version does not support this method!");
+                    }
+                    _reply.readException();
+                }
+                finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+            }
+
+            @Override
+            public boolean setDownloadNvBmp(String loadPath) throws RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                boolean _result;
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeString(loadPath);
+
+                    boolean _status = mRemote.transact(Stub.TRANSACTION_setDownloadNvBmp, _data, _reply, 0);
+                    if (!_status ) {
+                        throw new InnerPrinterException("this version does not support this method!");
+                    }
+                    _reply.readException();
+                    _result = (0!=_reply.readInt());
+                }
+                finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+                return _result;
+            }
+
+            @Override
+            public boolean setDownloadNvBmpCallBack(String loadPath, ICallback callback) throws RemoteException {
+                Parcel _data = Parcel.obtain();
+                Parcel _reply = Parcel.obtain();
+                boolean _result;
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeString(loadPath);
+
+                    _data.writeStrongBinder((((callback!=null))?(callback.asBinder()):(null)));
+                    boolean _status = mRemote.transact(Stub.TRANSACTION_setDownloadNvBmpCallBack, _data, _reply, 0);
+                    if (!_status ) {
+                        throw new InnerPrinterException("this version does not support this method!");
+                    }
+                    _reply.readException();
+                    _result = (0!=_reply.readInt());
+                }
+                finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
+                return _result;
             }
 
 ////////////////////////////////
