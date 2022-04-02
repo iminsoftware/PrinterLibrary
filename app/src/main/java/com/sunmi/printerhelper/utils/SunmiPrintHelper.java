@@ -559,6 +559,11 @@ public class SunmiPrintHelper {
                 public void onPrintResult(int code, String msg) throws RemoteException {
 
                 }
+
+                @Override
+                public void callback(int status) throws RemoteException {
+
+                }
             });
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -598,6 +603,11 @@ public class SunmiPrintHelper {
                 public void onPrintResult(int code, String msg) throws RemoteException {
 
                 }
+
+                @Override
+                public void callback(int status) throws RemoteException {
+
+                }
             });
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -633,6 +643,11 @@ public class SunmiPrintHelper {
 
                 @Override
                 public void onPrintResult(int code, String msg) throws RemoteException {
+
+                }
+
+                @Override
+                public void callback(int status) throws RemoteException {
 
                 }
             });
@@ -836,5 +851,18 @@ public class SunmiPrintHelper {
         sunmiPrinterService.printText("到期时间         12-13  14时\n", null);
         sunmiPrinterService.printBarCode("{C1234567890123456",  8, 90, 2, 2, null);
         sunmiPrinterService.lineWrap(1, null);
+    }
+
+    public void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, int[] size) {
+        if (sunmiPrinterService == null) {
+            return;
+        }
+        try {
+
+            Log.d("test_1_dddd","iiiii-----printTable  colsAlign==>"+ colsTextArr[0]+" "+colsTextArr[1]+" "+colsTextArr[2]);
+            sunmiPrinterService.printColumnsText(colsTextArr, colsWidthArr, colsAlign,size);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

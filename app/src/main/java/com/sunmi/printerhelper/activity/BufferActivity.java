@@ -103,5 +103,10 @@ public class BufferActivity extends BaseActivity {
                 }
             });
         }
+
+        @Override
+        public void callback(int status) throws RemoteException {
+
+        }
     };
 }

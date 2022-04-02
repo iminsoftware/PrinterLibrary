@@ -105,7 +105,7 @@ public class IminPrintUtils {
      * You can see {@link ExceptionConst}
      * So you have to handle these exceptions
      */
-    private void handleRemoteException(RemoteException e) {
+    private void handleException(Exception e) {
         //TODO process when get one exception
     }
 
@@ -118,8 +118,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendRAWData(data, null);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -133,8 +133,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.cutPaper(null);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -149,8 +149,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printerInit(null);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -169,8 +169,8 @@ public class IminPrintUtils {
 //
 //            }
             sunmiPrinterService.lineWrap(3, null);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -184,8 +184,8 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterSerialNo();
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
             return "";
         }
     }
@@ -200,8 +200,8 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterModal();
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
             return "";
         }
     }
@@ -216,8 +216,8 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterVersion();
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
             return "";
         }
     }
@@ -231,8 +231,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.getPrinterFactory(callbcak);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -247,8 +247,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.getPrintedLength(callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -261,8 +261,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setAlignment(align, null);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -279,7 +279,7 @@ public class IminPrintUtils {
 
         try {
             sunmiPrinterService.autoOutPaper(null);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             print3Line();
         }
     }
@@ -299,7 +299,7 @@ public class IminPrintUtils {
             try {
                 sunmiPrinterService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, isBold ?
                         WoyouConsts.ENABLE : WoyouConsts.DISABLE);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 if (isBold) {
                     sunmiPrinterService.sendRAWData(ESCUtil.boldOn(), null);
                 } else {
@@ -309,7 +309,7 @@ public class IminPrintUtils {
             try {
                 sunmiPrinterService.setPrinterStyle(WoyouConsts.ENABLE_UNDERLINE, isUnderLine ?
                         WoyouConsts.ENABLE : WoyouConsts.DISABLE);
-            } catch (RemoteException e) {
+            } catch (Exception e) {
                 if (isUnderLine) {
                     sunmiPrinterService.sendRAWData(ESCUtil.underlineWithOneDotWidthOn(), null);
                 } else {
@@ -317,7 +317,7 @@ public class IminPrintUtils {
                 }
             }
             sunmiPrinterService.printTextWithFont(content, null, size, null);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -333,7 +333,7 @@ public class IminPrintUtils {
 
         try {
             sunmiPrinterService.printBarCode(data, symbology, height, width, textposition, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -348,7 +348,7 @@ public class IminPrintUtils {
 
         try {
             sunmiPrinterService.printQRCode(data, modulesize, errorlevel, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -362,7 +362,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printColumnsString(txts, width, align, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -392,7 +392,7 @@ public class IminPrintUtils {
                 sunmiPrinterService.printBitmap(bitmap, null);
                 sunmiPrinterService.printText("\n纵向排列\n", null);
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -407,7 +407,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterMode() == 1;
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -422,7 +422,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterMode() == 2;
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             return false;
         }
     }
@@ -442,8 +442,8 @@ public class IminPrintUtils {
 
         try {
             sunmiPrinterService.openDrawer(callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -464,8 +464,8 @@ public class IminPrintUtils {
         try {
             Log.d("test_1_dddd", "iiiii-----printTable  controlLcd==>" + flag);
             sunmiPrinterService.sendLCDCommand(flag);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -500,8 +500,13 @@ public class IminPrintUtils {
                 public void onPrintResult(int code, String msg) throws RemoteException {
 
                 }
+
+                @Override
+                public void callback(int status) throws RemoteException {
+
+                }
             });
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -539,8 +544,13 @@ public class IminPrintUtils {
                 public void onPrintResult(int code, String msg) throws RemoteException {
 
                 }
+
+                @Override
+                public void callback(int status) throws RemoteException {
+
+                }
             });
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -599,7 +609,7 @@ public class IminPrintUtils {
                 default:
                     break;
             }
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         Toast.makeText(context, result, Toast.LENGTH_LONG).show();
@@ -621,7 +631,7 @@ public class IminPrintUtils {
             sunmiPrinterService.labelLocate();
             printLabelContent();
             sunmiPrinterService.labelOutput();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -644,7 +654,7 @@ public class IminPrintUtils {
                 printLabelContent();
             }
             sunmiPrinterService.labelOutput();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -655,7 +665,7 @@ public class IminPrintUtils {
      * 自定义的标签小票内容
      * 例子中并不能适用所有标签纸，实际使用时注意要自适配标签纸大小，可通过调节字体大小，内容位置等方式
      */
-    private void printLabelContent() throws RemoteException {
+    private void printLabelContent() throws Exception {
         sunmiPrinterService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, WoyouConsts.ENABLE);
         sunmiPrinterService.lineWrap(1, null);
         sunmiPrinterService.setAlignment(0, null);
@@ -671,8 +681,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.updateFirmware();
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -682,8 +692,8 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getFirmwareStatus();
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
         return 0;
     }
@@ -694,8 +704,8 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getServiceVersion();
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
         return "";
     }
@@ -706,8 +716,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printerInit(callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -717,8 +727,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printerSelfChecking(callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -728,8 +738,8 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterModal();
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
         return "";
     }
@@ -740,8 +750,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.getPrintedLength(callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
         return;
     }
@@ -753,8 +763,8 @@ public class IminPrintUtils {
 
         try {
             sunmiPrinterService.lineWrap(n, callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -765,8 +775,8 @@ public class IminPrintUtils {
 
         try {
             sunmiPrinterService.setFontSize(fontsize, callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -777,8 +787,8 @@ public class IminPrintUtils {
 
         try {
             sunmiPrinterService.printText(text, callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -788,8 +798,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printTextWithFont(text, typeface, fontsize, callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -799,8 +809,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printColumnsText(colsTextArr, colsWidthArr, colsAlign, callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -810,8 +820,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printBitmap(bitmap, callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -821,8 +831,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printOriginalText(text, callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -832,8 +842,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.commitPrint(transbean, callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -843,8 +853,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.commitPrinterBuffer();
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -854,8 +864,8 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.cutPaper(callback);
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
     }
 
@@ -865,8 +875,8 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getCutPaperTimes();
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
         return 0;
     }
@@ -877,8 +887,8 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getOpenDrawerTimes();
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
         }
         return 0;
     }
@@ -895,7 +905,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.enterPrinterBuffer(clean);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -906,7 +916,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.exitPrinterBuffer(commit);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -917,7 +927,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.tax(data, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -928,7 +938,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.clearBuffer();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -939,7 +949,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.commitPrinterBufferWithCallback(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -950,7 +960,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.exitPrinterBufferWithCallback(commit, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -961,7 +971,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.updatePrinterState();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return -1;
@@ -973,7 +983,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendLCDCommand(flag);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -984,7 +994,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendLCDString(string, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -995,7 +1005,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendLCDBitmap(bitmap, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1006,7 +1016,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterMode();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -1018,7 +1028,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterBBMDistance();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -1030,7 +1040,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printBitmapCustom(bitmap, type, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1041,7 +1051,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getForcedDouble();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -1053,7 +1063,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.isForcedAntiWhite();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -1065,7 +1075,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.isForcedBold();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -1077,7 +1087,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.isForcedUnderline();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -1089,7 +1099,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getForcedRowHeight();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -1101,7 +1111,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getFontName();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -1113,7 +1123,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendLCDDoubleString(topText, bottomText, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1127,8 +1137,8 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterPaper() == 1 ? "58mm" : "80mm";
-        } catch (RemoteException e) {
-            handleRemoteException(e);
+        } catch (Exception e) {
+            handleException(e);
             return "";
         }
     }
@@ -1139,7 +1149,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getDrawerStatus();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -1151,7 +1161,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendLCDFillString(string, size, fill, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1162,7 +1172,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendLCDMultiString(text, align, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1173,7 +1183,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterDensity();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -1185,7 +1195,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.print2DCode(data, symbology, modulesize, errorlevel, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1196,7 +1206,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.autoOutPaper(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1207,7 +1217,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setPrinterStyle(key, value);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1218,7 +1228,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.labelLocate();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1229,7 +1239,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.labelOutput();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1240,7 +1250,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.initPrinterCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1251,7 +1261,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.initPrinter(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1262,7 +1272,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterStatusCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return -1;
@@ -1274,7 +1284,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterStatus(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return -1;
@@ -1286,7 +1296,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printAndLineFeedCallBack(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1297,7 +1307,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printAndLineFeed();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1308,7 +1318,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printAndFeedPaperCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1319,7 +1329,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printAndFeedPaper(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1330,7 +1340,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.partialCutCallBack(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1341,7 +1351,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.partialCut();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1352,7 +1362,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setAlignmentCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1363,7 +1373,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setAlignment(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1374,7 +1384,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setTextSizeCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1385,7 +1395,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setTextSize(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1396,7 +1406,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setTextTypefaceCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1407,7 +1417,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setTextTypeface(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1418,7 +1428,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setTextStyleCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1429,7 +1439,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setTextStyle(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1440,7 +1450,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setTextLineSpacingCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1451,7 +1461,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setTextLineSpacing(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1462,7 +1472,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setTextWidthCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1473,7 +1483,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setTextWidth(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1484,7 +1494,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printTextCallBack(text, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1495,7 +1505,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printText(text);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1506,7 +1516,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printTextWithAliCallBack(text, anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1517,7 +1527,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printTextWithAli(text, anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1529,7 +1539,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printColumnsTextCallBack(colsTextArr, colsWidthArr, colsAlign,size, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1540,7 +1550,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printColumnsText(colsTextArr, colsWidthArr, colsAlign,size);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1552,7 +1562,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setBarCodeWidthCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1563,7 +1573,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setBarCodeWidth(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -1575,7 +1585,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setBarCodeHeightCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1586,7 +1596,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setBarCodeHeight(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1597,7 +1607,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setBarCodeContentPrintPosCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1608,7 +1618,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setBarCodeContentPrintPos(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1618,7 +1628,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printBarCodeCallBack(anInt,data, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1629,7 +1639,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printBarCode(anInt,data);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1639,7 +1649,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printBarCodeWithAlignCallBack(anInt,data,alignments, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1650,7 +1660,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printBarCodeWithAlign(anInt,data,alignments);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1660,7 +1670,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setQrCodeSizeCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1671,7 +1681,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setQrCodeSize(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1681,7 +1691,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setQrCodeErrorCorrectionLevCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1692,7 +1702,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setQrCodeErrorCorrectionLev(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1702,7 +1712,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setLeftMarginCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1713,7 +1723,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setLeftMargin(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1723,7 +1733,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printQrCodeCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1734,7 +1744,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printQrCode(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1744,7 +1754,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printQrCodeWithAlignCallBack(anInt, alignments, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1755,7 +1765,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printQrCodeWithAlign(anInt, alignments);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1765,7 +1775,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setPageFormatCallBack(anInt, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1776,7 +1786,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setPageFormat(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1786,7 +1796,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printSingleBitmapCallBack(bitmap, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1797,7 +1807,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printSingleBitmap(bitmap);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1807,7 +1817,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printSingleBitmapWithAlignCallBack(bitmap,alignments, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1818,7 +1828,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printSingleBitmapWithAlign(bitmap,alignments);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1828,7 +1838,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printMultiBitmapCallBack(bitmap, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1839,7 +1849,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printMultiBitmap(bitmap);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1849,7 +1859,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printMultiBitmapWithAlignCallBack(bitmap,alignments, callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1860,7 +1870,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printMultiBitmapWithAlign(bitmap,alignments);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1870,7 +1880,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.resetDeviceCallBack(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1881,7 +1891,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.resetDevice();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1891,7 +1901,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.fullCutCallBack(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1902,7 +1912,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.fullCut();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1912,7 +1922,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendRAWDataCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1923,7 +1933,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendRAWData(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1933,7 +1943,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendRAWDataStringCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1944,7 +1954,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendRAWDataString(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1954,7 +1964,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendRAWDataByteCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1965,7 +1975,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sendRAWDataByte(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1975,7 +1985,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setUnderlineCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1986,7 +1996,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setUnderline(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -1996,7 +2006,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sethaveBoldCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2007,7 +2017,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.sethaveBold(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2017,7 +2027,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setHaveLineHeightCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2028,7 +2038,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setHaveLineHeight(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2038,7 +2048,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printerByteWithByteCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2049,7 +2059,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printerByteWithByte(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2059,7 +2069,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printerByteCallBack(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2070,7 +2080,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printerByte();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2080,7 +2090,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQRSizeCallBack((int) ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2091,7 +2101,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQRSize((int) ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2101,7 +2111,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR1MarginLeftCallBack((int) ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2112,7 +2122,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR1MarginLeft((int) ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2122,7 +2132,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR2MarginLeftCallBack((int) ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2133,7 +2143,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR2MarginLeft((int) ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2143,7 +2153,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR1LevelCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2154,7 +2164,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR1Level(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2164,7 +2174,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR2LevelCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2175,7 +2185,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR2Level(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2185,7 +2195,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR1VersionCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2196,7 +2206,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR1Version(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2206,7 +2216,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR2VersionCallBack(ints,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2217,7 +2227,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.setDoubleQR2Version(ints);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2227,7 +2237,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printDoubleQRCallBack(qr1,qr2,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2238,7 +2248,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printDoubleQR(qr1,qr2);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2248,7 +2258,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.initParamsCallBack(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2259,7 +2269,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.initParams();
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2269,7 +2279,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.initParamsIsClearCallBack(isClearCache,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2280,7 +2290,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.initParamsIsClear(isClearCache);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2290,7 +2300,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getForcedRowHeightCallBack(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 0;
@@ -2302,7 +2312,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.isForcedBoldCallBack(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -2313,7 +2323,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.isForcedUnderlineCallBack(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -2324,7 +2334,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.getPrinterDensityCallBack(callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return 100;
@@ -2335,7 +2345,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.initBluePrinterCallBack(anInt,device,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2345,7 +2355,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.initBluePrinter(anInt,device);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2355,7 +2365,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printBMPBitmapCallBack(bitmap,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2365,7 +2375,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printBMPBitmap(bitmap);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2375,7 +2385,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printNvBitmapCallBack(anInt,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2385,7 +2395,7 @@ public class IminPrintUtils {
         }
         try {
             sunmiPrinterService.printNvBitmap(anInt);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -2395,7 +2405,7 @@ public class IminPrintUtils {
         }
         try {
             return sunmiPrinterService.setDownloadNvBmpCallBack(loadPath,callback);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
@@ -2406,7 +2416,7 @@ public class IminPrintUtils {
         }
         try {
            return sunmiPrinterService.setDownloadNvBmp(loadPath);
-        } catch (RemoteException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;

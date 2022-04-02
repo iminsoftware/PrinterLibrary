@@ -15,12 +15,15 @@ public interface ICallback extends IInterface {
 
     void onPrintResult(int code, String msg) throws RemoteException;
 
+    void callback(int status) throws android.os.RemoteException;
+
     public abstract static class Stub extends Binder implements ICallback {
         private static final String DESCRIPTOR = "woyou.aidlservice.jiuiv5.ICallback";
         static final int TRANSACTION_onRunResult = 1;
         static final int TRANSACTION_onReturnString = 2;
         static final int TRANSACTION_onRaiseException = 3;
         static final int TRANSACTION_onPrintResult = 4;
+        static final int TRANSACTION_callback = 5;
 
         public Stub() {
             this.attachInterface(this, "woyou.aidlservice.jiuiv5.ICallback");
@@ -65,12 +68,22 @@ public interface ICallback extends IInterface {
                     return true;
                 }
 
-                case 4:
+                case 4: {
                     data.enforceInterface("woyou.aidlservice.jiuiv5.ICallback");
                     int _arg0 = data.readInt();
                     _arg1 = data.readString();
                     this.onPrintResult(_arg0, _arg1);
                     return true;
+                }
+
+                case TRANSACTION_callback:
+                {
+                    data.enforceInterface("woyou.aidlservice.jiuiv5.ICallback");
+                    int _arg0 = data.readInt();
+                    this.callback(_arg0);
+                    reply.writeNoException();
+                    return true;
+                }
                 case 1598968902:
                     reply.writeString("woyou.aidlservice.jiuiv5.ICallback");
                     return true;
@@ -146,6 +159,21 @@ public interface ICallback extends IInterface {
                     _data.recycle();
                 }
 
+            }
+
+            @Override
+            public void callback(int status) throws RemoteException {
+                android.os.Parcel _data = android.os.Parcel.obtain();
+                android.os.Parcel _reply = android.os.Parcel.obtain();
+                try {
+                    _data.writeInterfaceToken(DESCRIPTOR);
+                    _data.writeInt(status);
+                    this.mRemote.transact(Stub.TRANSACTION_callback, _data, _reply, 0);
+                }
+                finally {
+                    _reply.recycle();
+                    _data.recycle();
+                }
             }
         }
     }

@@ -2,6 +2,7 @@ package com.sunmi.printerhelper;
 
 import android.app.Application;
 
+import com.sunmi.peripheral.printer.IminPrintUtils;
 import com.sunmi.printerhelper.utils.SunmiPrintHelper;
 
 public class BaseApp extends Application {
@@ -16,6 +17,7 @@ public class BaseApp extends Application {
      * Connect print service through interface library
      */
     private void init(){
-        SunmiPrintHelper.getInstance().initSunmiPrinterService(this);
+        //SunmiPrintHelper.getInstance().initSunmiPrinterService(this);
+        IminPrintUtils.getInstance().initSunmiPrinterService(this);
     }
 }

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sunmi.printerhelper.R;
+import com.sunmi.printerhelper.TestService;
 import com.sunmi.printerhelper.threadhelp.ThreadPoolManager;
 import com.sunmi.printerhelper.utils.BytesUtil;
 import com.sunmi.printerhelper.utils.SunmiPrintHelper;
@@ -116,7 +117,8 @@ public class FunctionActivity extends AppCompatActivity {
                             return;
                         }
                         if(demoDetails.activityClass != null){
-                            startActivity(new Intent(FunctionActivity.this, demoDetails.activityClass));
+                            startService(new Intent(FunctionActivity.this, TestService.class));
+                           // startActivity(new Intent(FunctionActivity.this, demoDetails.activityClass));
                         }
                         if(demoDetails.titleId == R.string.function_threeline){
                             SunmiPrintHelper.getInstance().print3Line();

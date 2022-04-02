@@ -60,6 +60,11 @@ public class PrinterInfoActivity extends BaseActivity{
             public void onPrintResult(int code, String msg) throws RemoteException {
 
             }
+
+            @Override
+            public void callback(int status) throws RemoteException {
+
+            }
         });
         SunmiPrintHelper.getInstance().getPrinterHead(new InnerResultCallback() {
             @Override
@@ -79,6 +84,11 @@ public class PrinterInfoActivity extends BaseActivity{
 
             @Override
             public void onPrintResult(int code, String msg) throws RemoteException {
+
+            }
+
+            @Override
+            public void callback(int status) throws RemoteException {
 
             }
         });
