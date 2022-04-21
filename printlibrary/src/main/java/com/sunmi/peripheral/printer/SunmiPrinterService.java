@@ -51,6 +51,7 @@ public interface SunmiPrinterService extends IInterface {
 
     void printBarCode(String data, int symbology, int height, int width, int textposition, InnerResultCallback callback) throws RemoteException;
 
+
     void printQRCode(String data, int modulesize, int errorlevel, InnerResultCallback callback) throws RemoteException;
 
     void printOriginalText(String text, InnerResultCallback callback) throws RemoteException;
@@ -838,6 +839,7 @@ public interface SunmiPrinterService extends IInterface {
         static final int TRANSACTION_printNvBitmapCallBack = (android.os.IBinder.FIRST_CALL_TRANSACTION + 162);
         static final int TRANSACTION_setDownloadNvBmp = (android.os.IBinder.FIRST_CALL_TRANSACTION + 163);
         static final int TRANSACTION_setDownloadNvBmpCallBack = (android.os.IBinder.FIRST_CALL_TRANSACTION + 164);
+        static final int TRANSACTION_printBarCodeImin = (android.os.IBinder.FIRST_CALL_TRANSACTION + 165);
 
         public Stub() {
             this.attachInterface(this, DESCRIPTOR);
@@ -1049,6 +1051,15 @@ public interface SunmiPrinterService extends IInterface {
                     int _arg4 = data.readInt();
                     InnerResultCallback _arg5 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printBarCode(_arg0, _arg1, _arg2, _arg3, _arg4, _arg5);
+                    reply.writeNoException();
+                    return true;
+                }
+                case TRANSACTION_printBarCodeImin:
+                {
+                    data.enforceInterface(DESCRIPTOR);
+                    int _arg0 = data.readInt();
+                    String _arg1 = data.readString();
+                    this.printBarCode(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
                 }
@@ -4739,7 +4750,7 @@ public interface SunmiPrinterService extends IInterface {
                     _data.writeInterfaceToken(DESCRIPTOR);
                     _data.writeInt(anInt);
                     _data.writeString(data);
-                    boolean _status = mRemote.transact(Stub.TRANSACTION_printBarCode, _data, _reply, 0);
+                    boolean _status = mRemote.transact(Stub.TRANSACTION_printBarCodeImin, _data, _reply, 0);
                     if (!_status ) {
                         throw new InnerPrinterException("this version does not support this method!");
                     }

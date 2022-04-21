@@ -1267,13 +1267,24 @@ public class IminPrintUtils {
     }
 
     public int getPrinterStatusCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
-            return -1;
-        }
+
         try {
+            if (sunmiPrinterService == null) {
+                if (callback != null){
+                    callback.callback(-1);
+                }
+                return -1;
+            }
             return sunmiPrinterService.getPrinterStatusCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        if (callback != null){
+            try {
+                callback.callback(-1);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
         }
         return -1;
     }

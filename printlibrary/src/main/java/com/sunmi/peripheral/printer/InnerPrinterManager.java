@@ -26,16 +26,17 @@ public class InnerPrinterManager {
             Log.d("test_1_11", "ret ======>绑定服务");
             return mContext.getApplicationContext().bindService(intent, callback, 1);
         } else {
-            throw new InnerPrinterException("parameter must be not null!");
+            return false;
         }
     }
 
     public void unBindService(Context mContext, InnerPrinterCallback callback) throws InnerPrinterException {
         if (mContext != null && callback != null) {
             mContext.getApplicationContext().unbindService(callback);
-        } else {
-            throw new InnerPrinterException("parameter must be not null!");
         }
+//        else {
+//            throw new InnerPrinterException("parameter must be not null!");
+//        }
     }
 
     public boolean hasPrinter(SunmiPrinterService sunmiPrinterService) throws InnerPrinterException {
