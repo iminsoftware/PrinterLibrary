@@ -117,8 +117,8 @@ public class FunctionActivity extends AppCompatActivity {
                             return;
                         }
                         if(demoDetails.activityClass != null){
-                            startService(new Intent(FunctionActivity.this, TestService.class));
-                           // startActivity(new Intent(FunctionActivity.this, demoDetails.activityClass));
+                           // startService(new Intent(FunctionActivity.this, TestService.class));
+                            startActivity(new Intent(FunctionActivity.this, demoDetails.activityClass));
                         }
                         if(demoDetails.titleId == R.string.function_threeline){
                             SunmiPrintHelper.getInstance().print3Line();

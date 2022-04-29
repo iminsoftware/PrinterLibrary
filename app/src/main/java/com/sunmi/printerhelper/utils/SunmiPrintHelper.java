@@ -356,7 +356,7 @@ public class SunmiPrintHelper {
 
     }
 
-    /**
+    /**29, 107, 73, 9, 123, 66, 49, 50, 67, 65, 97, 45, 45]
      * print Bar Code
      */
     public void printBarCode(String data, int symbology, int height, int width, int textposition) {
@@ -669,7 +669,7 @@ public class SunmiPrintHelper {
         try {
             int paper = sunmiPrinterService.getPrinterPaper();
             sunmiPrinterService.printerInit(null);
-            sunmiPrinterService.setAlignment(0, null);
+            sunmiPrinterService.setAlignment(1, null);
             sunmiPrinterService.printText("测试样张\n", null);
             Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.sunmi);
             sunmiPrinterService.printBitmap(bitmap, null);

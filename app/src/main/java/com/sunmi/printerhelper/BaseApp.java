@@ -17,7 +17,7 @@ public class BaseApp extends Application {
      * Connect print service through interface library
      */
     private void init(){
-        //SunmiPrintHelper.getInstance().initSunmiPrinterService(this);
-        IminPrintUtils.getInstance().initSunmiPrinterService(this);
+        SunmiPrintHelper.getInstance().initSunmiPrinterService(this);
+        //IminPrintUtils.getInstance().initSunmiPrinterService(this);
     }
 }

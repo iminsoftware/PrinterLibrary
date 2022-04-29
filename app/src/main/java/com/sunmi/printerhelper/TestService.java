@@ -63,12 +63,12 @@ public class TestService extends Service {
                 int[] colsWidthArr3 = new int[]{1, 2, 1};
                 int[] colsAlign3 = new int[]{0, 1, 2};
                 int[] colsSize3 = new int[]{26, 26, 26};
-//                mIminPrintUtils.printColumnsText(strings3, colsWidthArr3,
-//                        colsAlign3, colsSize3);
-//                mIminPrintUtils.printColumnsText(strings3, colsWidthArr3,
-//                        colsAlign3, colsSize3);
-//                mIminPrintUtils.printColumnsText(strings3, colsWidthArr3,
-//                        colsAlign3, colsSize3);
+                mIminPrintUtils.printColumnsText(strings3, colsWidthArr3,
+                        colsAlign3, colsSize3);
+                mIminPrintUtils.printColumnsText(strings3, colsWidthArr3,
+                        colsAlign3, colsSize3);
+                mIminPrintUtils.printColumnsText(strings3, colsWidthArr3,
+                        colsAlign3, colsSize3);
 
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_rabit);
                 mIminPrintUtils.printSingleBitmap(bitmap);
