@@ -3,7 +3,6 @@ package com.sunmi.peripheral.printer;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.RemoteException;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,19 +10,19 @@ import android.widget.Toast;
 import java.util.List;
 
 public class IminPrintUtils {
-    public static int NoSunmiPrinter = 0x00000000;
-    public static int CheckSunmiPrinter = 0x00000001;
-    public static int FoundSunmiPrinter = 0x00000002;
-    public static int LostSunmiPrinter = 0x00000003;
+    public static int NoPrinter = 0x00000000;
+    public static int CheckPrinter = 0x00000001;
+    public static int FoundPrinter = 0x00000002;
+    public static int LostPrinter = 0x00000003;
 
     /**
-     * sunmiPrinter means checking the printer connection status
+     * Printer means checking the printer connection status
      */
-    public int sunmiPrinter = CheckSunmiPrinter;
+    public int Printer = CheckPrinter;
     /**
      * SunmiPrinterService for API
      */
-    private SunmiPrinterService sunmiPrinterService;
+    private SunmiPrinterService printerService;
 
     private static IminPrintUtils helper = new IminPrintUtils();
 
@@ -37,29 +36,29 @@ public class IminPrintUtils {
     private InnerPrinterCallback innerPrinterCallback = new InnerPrinterCallback() {
         @Override
         protected void onConnected(SunmiPrinterService service) {
-            sunmiPrinterService = service;
-            checkSunmiPrinterService(service);
+            printerService = service;
+            checkPrinterService(service);
             Log.i("test_1_000000", "iiii   onConnected");
         }
 
         @Override
         protected void onDisconnected() {
-            sunmiPrinterService = null;
-            sunmiPrinter = LostSunmiPrinter;
+            printerService = null;
+            Printer = LostPrinter;
             Log.i("test_1_000000", "iiii   onDisconnected");
         }
     };
 
     /**
      *
-     * init sunmi print service
+     * init  print service
      */
-    public void initSunmiPrinterService(Context context) {
+    public void initPrinterService(Context context) {
         try {
             boolean ret = InnerPrinterManager.getInstance().bindService(context,
                     innerPrinterCallback);
             if (!ret) {
-                sunmiPrinter = NoSunmiPrinter;
+                Printer = NoPrinter;
             }
         } catch (InnerPrinterException e) {
             e.printStackTrace();
@@ -67,14 +66,14 @@ public class IminPrintUtils {
     }
 
     /**
-     * deInit sunmi print service
+     * deInit  print service
      */
-    public void deInitSunmiPrinterService(Context context) {
+    public void deInitPrinterService(Context context) {
         try {
-            if (sunmiPrinterService != null) {
+            if (printerService != null) {
                 InnerPrinterManager.getInstance().unBindService(context, innerPrinterCallback);
-                sunmiPrinterService = null;
-                sunmiPrinter = LostSunmiPrinter;
+                printerService = null;
+                Printer = LostPrinter;
             }
         } catch (InnerPrinterException e) {
             e.printStackTrace();
@@ -85,18 +84,18 @@ public class IminPrintUtils {
      * Check the printer connection,
      * like some devices do not have a printer but need to be connected to the cash drawer through a print service
      */
-    private void checkSunmiPrinterService(SunmiPrinterService service) {
+    private void checkPrinterService(SunmiPrinterService service) {
         boolean ret = false;
         try {
             ret = InnerPrinterManager.getInstance().hasPrinter(service);
-            int status = sunmiPrinterService.updatePrinterState();
+            int status = printerService.updatePrinterState();
 
-            Log.i("test_1_000000", "iiii   checkSunmiPrinterService " + ret + "  status==  " + status + "  ttt " + sunmiPrinterService.getFirmwareStatus());
+            Log.i("test_1_000000", "iiii   checkPrinterService " + ret + "  status==  " + status + "  ttt " + printerService.getFirmwareStatus());
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        sunmiPrinter = ret ? FoundSunmiPrinter : NoSunmiPrinter;
+        Printer = ret ? FoundPrinter : NoPrinter;
     }
 
     /**
@@ -113,11 +112,11 @@ public class IminPrintUtils {
      * send esc cmd
      */
     public void sendRawData(byte[] data) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendRAWData(data, null);
+            printerService.sendRAWData(data, null);
         } catch (Exception e) {
             handleException(e);
         }
@@ -127,12 +126,12 @@ public class IminPrintUtils {
      * Printer cuts paper and throws exception on machines without a cutter
      */
     public void cutpaper() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
         try {
-            sunmiPrinterService.cutPaper(null);
+            printerService.cutPaper(null);
         } catch (Exception e) {
             handleException(e);
         }
@@ -143,12 +142,12 @@ public class IminPrintUtils {
      * All style settings will be restored to default
      */
     public void initPrinter() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
         try {
-            sunmiPrinterService.printerInit(null);
+            printerService.printerInit(null);
         } catch (Exception e) {
             handleException(e);
         }
@@ -159,7 +158,7 @@ public class IminPrintUtils {
      * Not disabled when line spacing is set to 0
      */
     public void print3Line() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
@@ -168,7 +167,7 @@ public class IminPrintUtils {
 //            for (int i = 0;i<100000;i++){
 //
 //            }
-            sunmiPrinterService.lineWrap(3, null);
+            printerService.lineWrap(3, null);
         } catch (Exception e) {
             handleException(e);
         }
@@ -178,12 +177,12 @@ public class IminPrintUtils {
      * Get printer serial number
      */
     public String getPrinterSerialNo() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return "";
         }
         try {
-            return sunmiPrinterService.getPrinterSerialNo();
+            return printerService.getPrinterSerialNo();
         } catch (Exception e) {
             handleException(e);
             return "";
@@ -194,12 +193,12 @@ public class IminPrintUtils {
      * Get device model
      */
     public String getDeviceModel() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return "";
         }
         try {
-            return sunmiPrinterService.getPrinterModal();
+            return printerService.getPrinterModal();
         } catch (Exception e) {
             handleException(e);
             return "";
@@ -210,12 +209,12 @@ public class IminPrintUtils {
      * Get firmware version
      */
     public String getPrinterVersion() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return "";
         }
         try {
-            return sunmiPrinterService.getPrinterVersion();
+            return printerService.getPrinterVersion();
         } catch (Exception e) {
             handleException(e);
             return "";
@@ -226,11 +225,11 @@ public class IminPrintUtils {
      * Get paper specifications
      */
     public void getPrinterFactory(InnerResultCallback callbcak) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.getPrinterFactory(callbcak);
+            printerService.getPrinterFactory(callbcak);
         } catch (Exception e) {
             handleException(e);
         }
@@ -241,12 +240,12 @@ public class IminPrintUtils {
      * Get printing distance through interface callback since 1.0.8(printerlibrary)
      */
     public void getPrinterDistance(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
         try {
-            sunmiPrinterService.getPrintedLength(callback);
+            printerService.getPrintedLength(callback);
         } catch (Exception e) {
             handleException(e);
         }
@@ -256,11 +255,11 @@ public class IminPrintUtils {
      * Set printer alignment
      */
     public void setAlign(int align) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setAlignment(align, null);
+            printerService.setAlignment(align, null);
         } catch (Exception e) {
             handleException(e);
         }
@@ -272,13 +271,13 @@ public class IminPrintUtils {
      * But if the Api does not support it, it will be replaced by printing three lines
      */
     public void feedPaper() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
 
         try {
-            sunmiPrinterService.autoOutPaper(null);
+            printerService.autoOutPaper(null);
         } catch (Exception e) {
             print3Line();
         }
@@ -290,33 +289,33 @@ public class IminPrintUtils {
      * More settings reference documentation {@link WoyouConsts}
      */
     public void printText(String content, float size, boolean isBold, boolean isUnderLine) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
 
         try {
             try {
-                sunmiPrinterService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, isBold ?
+                printerService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, isBold ?
                         WoyouConsts.ENABLE : WoyouConsts.DISABLE);
             } catch (Exception e) {
                 if (isBold) {
-                    sunmiPrinterService.sendRAWData(ESCUtil.boldOn(), null);
+                    printerService.sendRAWData(ESCUtil.boldOn(), null);
                 } else {
-                    sunmiPrinterService.sendRAWData(ESCUtil.boldOff(), null);
+                    printerService.sendRAWData(ESCUtil.boldOff(), null);
                 }
             }
             try {
-                sunmiPrinterService.setPrinterStyle(WoyouConsts.ENABLE_UNDERLINE, isUnderLine ?
+                printerService.setPrinterStyle(WoyouConsts.ENABLE_UNDERLINE, isUnderLine ?
                         WoyouConsts.ENABLE : WoyouConsts.DISABLE);
             } catch (Exception e) {
                 if (isUnderLine) {
-                    sunmiPrinterService.sendRAWData(ESCUtil.underlineWithOneDotWidthOn(), null);
+                    printerService.sendRAWData(ESCUtil.underlineWithOneDotWidthOn(), null);
                 } else {
-                    sunmiPrinterService.sendRAWData(ESCUtil.underlineOff(), null);
+                    printerService.sendRAWData(ESCUtil.underlineOff(), null);
                 }
             }
-            sunmiPrinterService.printTextWithFont(content, null, size, null);
+            printerService.printTextWithFont(content, null, size, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -327,12 +326,12 @@ public class IminPrintUtils {
      * print Bar Code
      */
     public void printBarCode(String data, int symbology, int height, int width, int textposition, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
 
         try {
-            sunmiPrinterService.printBarCode(data, symbology, height, width, textposition, callback);
+            printerService.printBarCode(data, symbology, height, width, textposition, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -342,12 +341,12 @@ public class IminPrintUtils {
      * print Qr Code
      */
     public void printQRCode(String data, int modulesize, int errorlevel, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
 
         try {
-            sunmiPrinterService.printQRCode(data, modulesize, errorlevel, callback);
+            printerService.printQRCode(data, modulesize, errorlevel, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -357,11 +356,11 @@ public class IminPrintUtils {
      * Print a row of a table
      */
     public void printColumnsString(String[] txts, int[] width, int[] align, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printColumnsString(txts, width, align, callback);
+            printerService.printColumnsString(txts, width, align, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -375,22 +374,22 @@ public class IminPrintUtils {
      * In this example, the image will be printed because the print text content is added
      */
     public void printBitmap(Bitmap bitmap, int orientation) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
 
         try {
             if (orientation == 0) {
-                sunmiPrinterService.printBitmap(bitmap, null);
-                sunmiPrinterService.printText("横向排列\n", null);
-                sunmiPrinterService.printBitmap(bitmap, null);
-                sunmiPrinterService.printText("横向排列\n", null);
+                printerService.printBitmap(bitmap, null);
+                printerService.printText("横向排列\n", null);
+                printerService.printBitmap(bitmap, null);
+                printerService.printText("横向排列\n", null);
             } else {
-                sunmiPrinterService.printBitmap(bitmap, null);
-                sunmiPrinterService.printText("\n纵向排列\n", null);
-                sunmiPrinterService.printBitmap(bitmap, null);
-                sunmiPrinterService.printText("\n纵向排列\n", null);
+                printerService.printBitmap(bitmap, null);
+                printerService.printText("\n纵向排列\n", null);
+                printerService.printBitmap(bitmap, null);
+                printerService.printText("\n纵向排列\n", null);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -401,12 +400,12 @@ public class IminPrintUtils {
      * Gets whether the current printer is in black mark mode
      */
     public boolean isBlackLabelMode() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return false;
         }
         try {
-            return sunmiPrinterService.getPrinterMode() == 1;
+            return printerService.getPrinterMode() == 1;
         } catch (Exception e) {
             return false;
         }
@@ -416,12 +415,12 @@ public class IminPrintUtils {
      * Gets whether the current printer is in label-printing mode
      */
     public boolean isLabelMode() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return false;
         }
         try {
-            return sunmiPrinterService.getPrinterMode() == 2;
+            return printerService.getPrinterMode() == 2;
         } catch (Exception e) {
             return false;
         }
@@ -430,18 +429,18 @@ public class IminPrintUtils {
 
     /**
      * Open cash box
-     * This method can be used on Sunmi devices with a cash drawer interface
+     * This method can be used on  devices with a cash drawer interface
      * If there is no cash box (such as V1、P1) or the call fails, an exception will be thrown
      * <p>
-     * Reference to https://docs.sunmi.com/general-function-modules/external-device-debug/cash-box-driver/}
+     * Reference to https://docs..com/general-function-modules/external-device-debug/cash-box-driver/}
      */
     public void openCashBox(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
 
         try {
-            sunmiPrinterService.openDrawer(callback);
+            printerService.openDrawer(callback);
         } catch (Exception e) {
             handleException(e);
         }
@@ -456,32 +455,32 @@ public class IminPrintUtils {
      *             4 —— Clear screen contents
      */
     public void controlLcd(int flag) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
 
         try {
             Log.d("test_1_dddd", "iiiii-----printTable  controlLcd==>" + flag);
-            sunmiPrinterService.sendLCDCommand(flag);
+            printerService.sendLCDCommand(flag);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     /**
-     * Display text SUNMI,font size is 16 and format is fill
+     * Display text ,font size is 16 and format is fill
      * sendLCDFillString(txt, size, fill, callback)
      * Since the screen pixel height is 40, the font should not exceed 40
      */
     public void sendTextToLcd() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
 
         try {
-            sunmiPrinterService.sendLCDFillString("SUNMI", 16, true, new InnerLcdCallback() {
+            printerService.sendLCDFillString("", 16, true, new InnerLcdCallback() {
                 @Override
                 public void onRunResult(boolean show) throws RemoteException {
                 }
@@ -516,15 +515,15 @@ public class IminPrintUtils {
      * Display two lines and one empty line in the middle
      */
     public void sendTextsToLcd() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
 
         try {
-            String[] texts = {"SUNMI", "null", "SUNMI"};
+            String[] texts = {"", "null", ""};
             int[] align = {2, 1, 2};
-            sunmiPrinterService.sendLCDMultiString(texts, align, new InnerLcdCallback() {
+            printerService.sendLCDMultiString(texts, align, new InnerLcdCallback() {
                 @Override
                 public void onRunResult(boolean show) throws RemoteException {
                     //TODO handle result
@@ -568,13 +567,13 @@ public class IminPrintUtils {
      * printing
      */
     public void showPrinterStatus(Context context) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
         String result = "Interface is too low to implement interface";
         try {
-            int res = sunmiPrinterService.updatePrinterState();
+            int res = printerService.updatePrinterState();
             switch (res) {
                 case 1:
                     result = "printer is running";
@@ -623,14 +622,14 @@ public class IminPrintUtils {
      * 打印单张标签后为了方便用户撕纸可调用labelOutput,将标签纸推出纸舱口
      */
     public void printOneLabel() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
         try {
-            sunmiPrinterService.labelLocate();
+            printerService.labelLocate();
             printLabelContent();
-            sunmiPrinterService.labelOutput();
+            printerService.labelOutput();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -644,16 +643,16 @@ public class IminPrintUtils {
      * 打印多张标签后根据需求选择是否推出标签纸到纸舱口
      */
     public void printMultiLabel(int num) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             //TODO Service disconnection processing
             return;
         }
         try {
             for (int i = 0; i < num; i++) {
-                sunmiPrinterService.labelLocate();
+                printerService.labelLocate();
                 printLabelContent();
             }
-            sunmiPrinterService.labelOutput();
+            printerService.labelOutput();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -666,32 +665,32 @@ public class IminPrintUtils {
      * 例子中并不能适用所有标签纸，实际使用时注意要自适配标签纸大小，可通过调节字体大小，内容位置等方式
      */
     private void printLabelContent() throws Exception {
-        sunmiPrinterService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, WoyouConsts.ENABLE);
-        sunmiPrinterService.lineWrap(1, null);
-        sunmiPrinterService.setAlignment(0, null);
-        sunmiPrinterService.printText("商品         豆浆\n", null);
-        sunmiPrinterService.printText("到期时间         12-13  14时\n", null);
-        sunmiPrinterService.printBarCode("{C1234567890123456", 8, 90, 2, 2, null);
-        sunmiPrinterService.lineWrap(1, null);
+        printerService.setPrinterStyle(WoyouConsts.ENABLE_BOLD, WoyouConsts.ENABLE);
+        printerService.lineWrap(1, null);
+        printerService.setAlignment(0, null);
+        printerService.printText("商品         豆浆\n", null);
+        printerService.printText("到期时间         12-13  14时\n", null);
+        printerService.printBarCode("{C1234567890123456", 8, 90, 2, 2, null);
+        printerService.lineWrap(1, null);
     }
 
     public void updateFirmware() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.updateFirmware();
+            printerService.updateFirmware();
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public int getFirmwareStatus() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 0;
         }
         try {
-            return sunmiPrinterService.getFirmwareStatus();
+            return printerService.getFirmwareStatus();
         } catch (Exception e) {
             handleException(e);
         }
@@ -699,11 +698,11 @@ public class IminPrintUtils {
     }
 
     public String getServiceVersion() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return "";
         }
         try {
-            return sunmiPrinterService.getServiceVersion();
+            return printerService.getServiceVersion();
         } catch (Exception e) {
             handleException(e);
         }
@@ -711,33 +710,33 @@ public class IminPrintUtils {
     }
 
     public void printerInit(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printerInit(callback);
+            printerService.printerInit(callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void printerSelfChecking(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printerSelfChecking(callback);
+            printerService.printerSelfChecking(callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public String getPrinterModal() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return "";
         }
         try {
-            return sunmiPrinterService.getPrinterModal();
+            return printerService.getPrinterModal();
         } catch (Exception e) {
             handleException(e);
         }
@@ -745,11 +744,11 @@ public class IminPrintUtils {
     }
 
     public void getPrintedLength(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.getPrintedLength(callback);
+            printerService.getPrintedLength(callback);
         } catch (Exception e) {
             handleException(e);
         }
@@ -757,124 +756,124 @@ public class IminPrintUtils {
     }
 
     public void lineWrap(int n, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
 
         try {
-            sunmiPrinterService.lineWrap(n, callback);
+            printerService.lineWrap(n, callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void setFontSize(float fontsize, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
 
         try {
-            sunmiPrinterService.setFontSize(fontsize, callback);
+            printerService.setFontSize(fontsize, callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void printText(String text, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
 
         try {
-            sunmiPrinterService.printText(text, callback);
+            printerService.printText(text, callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void printTextWithFont(String text, String typeface, float fontsize, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printTextWithFont(text, typeface, fontsize, callback);
+            printerService.printTextWithFont(text, typeface, fontsize, callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printColumnsText(colsTextArr, colsWidthArr, colsAlign, callback);
+            printerService.printColumnsText(colsTextArr, colsWidthArr, colsAlign, callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void printBitmap(Bitmap bitmap, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printBitmap(bitmap, callback);
+            printerService.printBitmap(bitmap, callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void printOriginalText(String text, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printOriginalText(text, callback);
+            printerService.printOriginalText(text, callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void commitPrint(TransBean[] transbean, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.commitPrint(transbean, callback);
+            printerService.commitPrint(transbean, callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void commitPrinterBuffer() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.commitPrinterBuffer();
+            printerService.commitPrinterBuffer();
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void cutPaper(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.cutPaper(callback);
+            printerService.cutPaper(callback);
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public int getCutPaperTimes() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 0;
         }
         try {
-            return sunmiPrinterService.getCutPaperTimes();
+            return printerService.getCutPaperTimes();
         } catch (Exception e) {
             handleException(e);
         }
@@ -882,11 +881,11 @@ public class IminPrintUtils {
     }
 
     public int getOpenDrawerTimes() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 0;
         }
         try {
-            return sunmiPrinterService.getOpenDrawerTimes();
+            return printerService.getOpenDrawerTimes();
         } catch (Exception e) {
             handleException(e);
         }
@@ -900,77 +899,77 @@ public class IminPrintUtils {
      * result)
      */
     public void enterPrinterBuffer(boolean clean) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.enterPrinterBuffer(clean);
+            printerService.enterPrinterBuffer(clean);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void exitPrinterBuffer(boolean commit) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.exitPrinterBuffer(commit);
+            printerService.exitPrinterBuffer(commit);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void tax(byte[] data, InnerTaxCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.tax(data, callback);
+            printerService.tax(data, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void clearBuffer() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.clearBuffer();
+            printerService.clearBuffer();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void commitPrinterBufferWithCallback(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.commitPrinterBufferWithCallback(callback);
+            printerService.commitPrinterBufferWithCallback(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void exitPrinterBufferWithCallback(boolean commit, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.exitPrinterBufferWithCallback(commit, callback);
+            printerService.exitPrinterBufferWithCallback(commit, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public int updatePrinterState() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return -1;
         }
         try {
-            return sunmiPrinterService.updatePrinterState();
+            return printerService.updatePrinterState();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -978,44 +977,44 @@ public class IminPrintUtils {
     }
 
     public void sendLCDCommand(int flag) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendLCDCommand(flag);
+            printerService.sendLCDCommand(flag);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void sendLCDString(String string, InnerLcdCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendLCDString(string, callback);
+            printerService.sendLCDString(string, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void sendLCDBitmap(Bitmap bitmap, InnerLcdCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendLCDBitmap(bitmap, callback);
+            printerService.sendLCDBitmap(bitmap, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public int getPrinterMode() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 0;
         }
         try {
-            return sunmiPrinterService.getPrinterMode();
+            return printerService.getPrinterMode();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1023,11 +1022,11 @@ public class IminPrintUtils {
     }
 
     public int getPrinterBBMDistance() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 0;
         }
         try {
-            return sunmiPrinterService.getPrinterBBMDistance();
+            return printerService.getPrinterBBMDistance();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1035,22 +1034,22 @@ public class IminPrintUtils {
     }
 
     public void printBitmapCustom(Bitmap bitmap, int type, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printBitmapCustom(bitmap, type, callback);
+            printerService.printBitmapCustom(bitmap, type, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public int getForcedDouble() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 0;
         }
         try {
-            return sunmiPrinterService.getForcedDouble();
+            return printerService.getForcedDouble();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1058,11 +1057,11 @@ public class IminPrintUtils {
     }
 
     public boolean isForcedAntiWhite() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return false;
         }
         try {
-            return sunmiPrinterService.isForcedAntiWhite();
+            return printerService.isForcedAntiWhite();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1070,11 +1069,11 @@ public class IminPrintUtils {
     }
 
     public boolean isForcedBold() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return false;
         }
         try {
-            return sunmiPrinterService.isForcedBold();
+            return printerService.isForcedBold();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1082,11 +1081,11 @@ public class IminPrintUtils {
     }
 
     public boolean isForcedUnderline() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return false;
         }
         try {
-            return sunmiPrinterService.isForcedUnderline();
+            return printerService.isForcedUnderline();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1094,11 +1093,11 @@ public class IminPrintUtils {
     }
 
     public int getForcedRowHeight() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 0;
         }
         try {
-            return sunmiPrinterService.getForcedRowHeight();
+            return printerService.getForcedRowHeight();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1106,11 +1105,11 @@ public class IminPrintUtils {
     }
 
     public int getFontName() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 0;
         }
         try {
-            return sunmiPrinterService.getFontName();
+            return printerService.getFontName();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1118,11 +1117,11 @@ public class IminPrintUtils {
     }
 
     public void sendLCDDoubleString(String topText, String bottomText, InnerLcdCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendLCDDoubleString(topText, bottomText, callback);
+            printerService.sendLCDDoubleString(topText, bottomText, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1132,11 +1131,11 @@ public class IminPrintUtils {
      * Get paper specifications
      */
     public String getPrinterPaper() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return "";
         }
         try {
-            return sunmiPrinterService.getPrinterPaper() == 1 ? "58mm" : "80mm";
+            return printerService.getPrinterPaper() == 1 ? "58mm" : "80mm";
         } catch (Exception e) {
             handleException(e);
             return "";
@@ -1144,11 +1143,11 @@ public class IminPrintUtils {
     }
 
     public boolean getDrawerStatus() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return false;
         }
         try {
-            return sunmiPrinterService.getDrawerStatus();
+            return printerService.getDrawerStatus();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1156,33 +1155,33 @@ public class IminPrintUtils {
     }
 
     public void sendLCDFillString(String string, int size, boolean fill, InnerLcdCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendLCDFillString(string, size, fill, callback);
+            printerService.sendLCDFillString(string, size, fill, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void sendLCDMultiString(String[] text, int[] align, InnerLcdCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendLCDMultiString(text, align, callback);
+            printerService.sendLCDMultiString(text, align, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public int getPrinterDensity() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 0;
         }
         try {
-            return sunmiPrinterService.getPrinterDensity();
+            return printerService.getPrinterDensity();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1190,77 +1189,77 @@ public class IminPrintUtils {
     }
 
     public void print2DCode(String data, int symbology, int modulesize, int errorlevel, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.print2DCode(data, symbology, modulesize, errorlevel, callback);
+            printerService.print2DCode(data, symbology, modulesize, errorlevel, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void autoOutPaper(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.autoOutPaper(callback);
+            printerService.autoOutPaper(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setPrinterStyle(int key, int value) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setPrinterStyle(key, value);
+            printerService.setPrinterStyle(key, value);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void labelLocate() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.labelLocate();
+            printerService.labelLocate();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void labelOutput() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.labelOutput();
+            printerService.labelOutput();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void initPrinterCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.initPrinterCallBack(anInt, callback);
+            printerService.initPrinterCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void initPrinter(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.initPrinter(anInt);
+            printerService.initPrinter(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1269,13 +1268,13 @@ public class IminPrintUtils {
     public int getPrinterStatusCallBack(int anInt, InnerResultCallback callback) {
 
         try {
-            if (sunmiPrinterService == null) {
+            if (printerService == null) {
                 if (callback != null){
                     callback.callback(-1);
                 }
                 return -1;
             }
-            return sunmiPrinterService.getPrinterStatusCallBack(anInt, callback);
+            return printerService.getPrinterStatusCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1290,11 +1289,11 @@ public class IminPrintUtils {
     }
 
     public int getPrinterStatus(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return -1;
         }
         try {
-            return sunmiPrinterService.getPrinterStatus(anInt);
+            return printerService.getPrinterStatus(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1302,242 +1301,242 @@ public class IminPrintUtils {
     }
 
     public void printAndLineFeedCallBack(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printAndLineFeedCallBack(callback);
+            printerService.printAndLineFeedCallBack(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printAndLineFeed() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printAndLineFeed();
+            printerService.printAndLineFeed();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printAndFeedPaperCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printAndFeedPaperCallBack(anInt, callback);
+            printerService.printAndFeedPaperCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printAndFeedPaper(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printAndFeedPaper(anInt);
+            printerService.printAndFeedPaper(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void partialCutCallBack(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.partialCutCallBack(callback);
+            printerService.partialCutCallBack(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void partialCut() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.partialCut();
+            printerService.partialCut();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setAlignmentCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setAlignmentCallBack(anInt, callback);
+            printerService.setAlignmentCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setAlignment(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setAlignment(anInt);
+            printerService.setAlignment(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setTextSizeCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setTextSizeCallBack(anInt, callback);
+            printerService.setTextSizeCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setTextSize(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setTextSize(anInt);
+            printerService.setTextSize(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setTextTypefaceCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setTextTypefaceCallBack(anInt, callback);
+            printerService.setTextTypefaceCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setTextTypeface(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setTextTypeface(anInt);
+            printerService.setTextTypeface(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setTextStyleCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setTextStyleCallBack(anInt, callback);
+            printerService.setTextStyleCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setTextStyle(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setTextStyle(anInt);
+            printerService.setTextStyle(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setTextLineSpacingCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setTextLineSpacingCallBack(anInt, callback);
+            printerService.setTextLineSpacingCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setTextLineSpacing(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setTextLineSpacing(anInt);
+            printerService.setTextLineSpacing(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setTextWidthCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setTextWidthCallBack(anInt, callback);
+            printerService.setTextWidthCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setTextWidth(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setTextWidth(anInt);
+            printerService.setTextWidth(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printTextCallBack(String text, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printTextCallBack(text, callback);
+            printerService.printTextCallBack(text, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printText(String text) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printText(text);
+            printerService.printText(text);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printTextWithAliCallBack(String text, int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printTextWithAliCallBack(text, anInt, callback);
+            printerService.printTextWithAliCallBack(text, anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printTextWithAli(String text, int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printTextWithAli(text, anInt);
+            printerService.printTextWithAli(text, anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1545,22 +1544,22 @@ public class IminPrintUtils {
 
     //////////////////////////////////
     public void printColumnsTextCallBack(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, int[] size, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printColumnsTextCallBack(colsTextArr, colsWidthArr, colsAlign,size, callback);
+            printerService.printColumnsTextCallBack(colsTextArr, colsWidthArr, colsAlign,size, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, int[] size) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printColumnsText(colsTextArr, colsWidthArr, colsAlign,size);
+            printerService.printColumnsText(colsTextArr, colsWidthArr, colsAlign,size);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1568,22 +1567,22 @@ public class IminPrintUtils {
 
     //////////////////////////////
     public void setBarCodeWidthCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setBarCodeWidthCallBack(anInt, callback);
+            printerService.setBarCodeWidthCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setBarCodeWidth(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setBarCodeWidth(anInt);
+            printerService.setBarCodeWidth(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1591,726 +1590,726 @@ public class IminPrintUtils {
     }
 
     public void setBarCodeHeightCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setBarCodeHeightCallBack(anInt, callback);
+            printerService.setBarCodeHeightCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setBarCodeHeight(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setBarCodeHeight(anInt);
+            printerService.setBarCodeHeight(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setBarCodeContentPrintPosCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setBarCodeContentPrintPosCallBack(anInt, callback);
+            printerService.setBarCodeContentPrintPosCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setBarCodeContentPrintPos(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setBarCodeContentPrintPos(anInt);
+            printerService.setBarCodeContentPrintPos(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printBarCodeCallBack(int anInt,String data, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printBarCodeCallBack(anInt,data, callback);
+            printerService.printBarCodeCallBack(anInt,data, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printBarCode(int anInt,String data) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printBarCode(anInt,data);
+            printerService.printBarCode(anInt,data);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printBarCodeWithAlignCallBack(int anInt,String data, int alignments, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printBarCodeWithAlignCallBack(anInt,data,alignments, callback);
+            printerService.printBarCodeWithAlignCallBack(anInt,data,alignments, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printBarCodeWithAlign(int anInt,String data, int alignments) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printBarCodeWithAlign(anInt,data,alignments);
+            printerService.printBarCodeWithAlign(anInt,data,alignments);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setQrCodeSizeCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setQrCodeSizeCallBack(anInt, callback);
+            printerService.setQrCodeSizeCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setQrCodeSize(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setQrCodeSize(anInt);
+            printerService.setQrCodeSize(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setQrCodeErrorCorrectionLevCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setQrCodeErrorCorrectionLevCallBack(anInt, callback);
+            printerService.setQrCodeErrorCorrectionLevCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setQrCodeErrorCorrectionLev(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setQrCodeErrorCorrectionLev(anInt);
+            printerService.setQrCodeErrorCorrectionLev(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setLeftMarginCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setLeftMarginCallBack(anInt, callback);
+            printerService.setLeftMarginCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setLeftMargin(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setLeftMargin(anInt);
+            printerService.setLeftMargin(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printQrCodeCallBack(String anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printQrCodeCallBack(anInt, callback);
+            printerService.printQrCodeCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printQrCode(String anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printQrCode(anInt);
+            printerService.printQrCode(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printQrCodeWithAlignCallBack(String anInt, int alignments, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printQrCodeWithAlignCallBack(anInt, alignments, callback);
+            printerService.printQrCodeWithAlignCallBack(anInt, alignments, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printQrCodeWithAlign(String anInt, int alignments) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printQrCodeWithAlign(anInt, alignments);
+            printerService.printQrCodeWithAlign(anInt, alignments);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setPageFormatCallBack(int anInt, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setPageFormatCallBack(anInt, callback);
+            printerService.setPageFormatCallBack(anInt, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setPageFormat(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setPageFormat(anInt);
+            printerService.setPageFormat(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printSingleBitmapCallBack(Bitmap bitmap, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printSingleBitmapCallBack(bitmap, callback);
+            printerService.printSingleBitmapCallBack(bitmap, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printSingleBitmap(Bitmap bitmap) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printSingleBitmap(bitmap);
+            printerService.printSingleBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printSingleBitmapWithAlignCallBack(Bitmap bitmap, int alignments, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printSingleBitmapWithAlignCallBack(bitmap,alignments, callback);
+            printerService.printSingleBitmapWithAlignCallBack(bitmap,alignments, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printSingleBitmapWithAlign(Bitmap bitmap, int alignments) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printSingleBitmapWithAlign(bitmap,alignments);
+            printerService.printSingleBitmapWithAlign(bitmap,alignments);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printMultiBitmapCallBack(List<Bitmap> bitmap, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printMultiBitmapCallBack(bitmap, callback);
+            printerService.printMultiBitmapCallBack(bitmap, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printMultiBitmap(List<Bitmap> bitmap) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printMultiBitmap(bitmap);
+            printerService.printMultiBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printMultiBitmapWithAlignCallBack(List<Bitmap> bitmap, int alignments, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printMultiBitmapWithAlignCallBack(bitmap,alignments, callback);
+            printerService.printMultiBitmapWithAlignCallBack(bitmap,alignments, callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printMultiBitmapWithAlign(List<Bitmap> bitmap, int alignments) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printMultiBitmapWithAlign(bitmap,alignments);
+            printerService.printMultiBitmapWithAlign(bitmap,alignments);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void resetDeviceCallBack(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.resetDeviceCallBack(callback);
+            printerService.resetDeviceCallBack(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void resetDevice() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.resetDevice();
+            printerService.resetDevice();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void fullCutCallBack(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.fullCutCallBack(callback);
+            printerService.fullCutCallBack(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void fullCut() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.fullCut();
+            printerService.fullCut();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void sendRAWDataCallBack(int[] ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendRAWDataCallBack(ints,callback);
+            printerService.sendRAWDataCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void sendRAWData(int[] ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendRAWData(ints);
+            printerService.sendRAWData(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void sendRAWDataStringCallBack(String ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendRAWDataStringCallBack(ints,callback);
+            printerService.sendRAWDataStringCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void sendRAWDataString(String ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendRAWDataString(ints);
+            printerService.sendRAWDataString(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void sendRAWDataByteCallBack(byte[] ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendRAWDataByteCallBack(ints,callback);
+            printerService.sendRAWDataByteCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void sendRAWDataByte(byte[] ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sendRAWDataByte(ints);
+            printerService.sendRAWDataByte(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setUnderlineCallBack(boolean ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setUnderlineCallBack(ints,callback);
+            printerService.setUnderlineCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setUnderline(boolean ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setUnderline(ints);
+            printerService.setUnderline(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void sethaveBoldCallBack(boolean ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sethaveBoldCallBack(ints,callback);
+            printerService.sethaveBoldCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void sethaveBold(boolean ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.sethaveBold(ints);
+            printerService.sethaveBold(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setHaveLineHeightCallBack(float ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setHaveLineHeightCallBack(ints,callback);
+            printerService.setHaveLineHeightCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setHaveLineHeight(float ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setHaveLineHeight(ints);
+            printerService.setHaveLineHeight(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printerByteWithByteCallBack(byte[] ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printerByteWithByteCallBack(ints,callback);
+            printerService.printerByteWithByteCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printerByteWithByte(byte[] ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printerByteWithByte(ints);
+            printerService.printerByteWithByte(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printerByteCallBack(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printerByteCallBack(callback);
+            printerService.printerByteCallBack(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printerByte() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printerByte();
+            printerService.printerByte();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setDoubleQRSizeCallBack(float ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQRSizeCallBack((int) ints,callback);
+            printerService.setDoubleQRSizeCallBack((int) ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setDoubleQRSize(float ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQRSize((int) ints);
+            printerService.setDoubleQRSize((int) ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setDoubleQR1MarginLeftCallBack(float ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR1MarginLeftCallBack((int) ints,callback);
+            printerService.setDoubleQR1MarginLeftCallBack((int) ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setDoubleQR1MarginLeft(float ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR1MarginLeft((int) ints);
+            printerService.setDoubleQR1MarginLeft((int) ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setDoubleQR2MarginLeftCallBack(float ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR2MarginLeftCallBack((int) ints,callback);
+            printerService.setDoubleQR2MarginLeftCallBack((int) ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setDoubleQR2MarginLeft(float ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR2MarginLeft((int) ints);
+            printerService.setDoubleQR2MarginLeft((int) ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setDoubleQR1LevelCallBack(int ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR1LevelCallBack(ints,callback);
+            printerService.setDoubleQR1LevelCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setDoubleQR1Level(int ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR1Level(ints);
+            printerService.setDoubleQR1Level(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setDoubleQR2LevelCallBack(int ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR2LevelCallBack(ints,callback);
+            printerService.setDoubleQR2LevelCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setDoubleQR2Level(int ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR2Level(ints);
+            printerService.setDoubleQR2Level(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setDoubleQR1VersionCallBack(int ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR1VersionCallBack(ints,callback);
+            printerService.setDoubleQR1VersionCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setDoubleQR1Version(int ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR1Version(ints);
+            printerService.setDoubleQR1Version(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void setDoubleQR2VersionCallBack(int ints,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR2VersionCallBack(ints,callback);
+            printerService.setDoubleQR2VersionCallBack(ints,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setDoubleQR2Version(int ints) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.setDoubleQR2Version(ints);
+            printerService.setDoubleQR2Version(ints);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printDoubleQRCallBack(String qr1,String qr2,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printDoubleQRCallBack(qr1,qr2,callback);
+            printerService.printDoubleQRCallBack(qr1,qr2,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void printDoubleQR(String qr1,String qr2) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.printDoubleQR(qr1,qr2);
+            printerService.printDoubleQR(qr1,qr2);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void initParamsCallBack(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.initParamsCallBack(callback);
+            printerService.initParamsCallBack(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void initParams() {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.initParams();
+            printerService.initParams();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void initParamsIsClearCallBack(boolean isClearCache,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.initParamsIsClearCallBack(isClearCache,callback);
+            printerService.initParamsIsClearCallBack(isClearCache,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void initParamsIsClear(boolean isClearCache) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return;
         }
         try {
-            sunmiPrinterService.initParamsIsClear(isClearCache);
+            printerService.initParamsIsClear(isClearCache);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public int getForcedRowHeightCallBack(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 0;
         }
         try {
-            return sunmiPrinterService.getForcedRowHeightCallBack(callback);
+            return printerService.getForcedRowHeightCallBack(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2318,115 +2317,115 @@ public class IminPrintUtils {
     }
 
     public boolean isForcedBoldCallBack(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return false;
         }
         try {
-            return sunmiPrinterService.isForcedBoldCallBack(callback);
+            return printerService.isForcedBoldCallBack(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
     public boolean isForcedUnderlineCallBack(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return false;
         }
         try {
-            return sunmiPrinterService.isForcedUnderlineCallBack(callback);
+            return printerService.isForcedUnderlineCallBack(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
     public int getPrinterDensityCallBack(InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return 100;
         }
         try {
-            return sunmiPrinterService.getPrinterDensityCallBack(callback);
+            return printerService.getPrinterDensityCallBack(callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return 100;
     }
     public void initBluePrinterCallBack(int anInt, BluetoothDevice device, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return ;
         }
         try {
-            sunmiPrinterService.initBluePrinterCallBack(anInt,device,callback);
+            printerService.initBluePrinterCallBack(anInt,device,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void initBluePrinter(int anInt, BluetoothDevice device) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return ;
         }
         try {
-            sunmiPrinterService.initBluePrinter(anInt,device);
+            printerService.initBluePrinter(anInt,device);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printBMPBitmapCallBack(Bitmap bitmap, InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return ;
         }
         try {
-            sunmiPrinterService.printBMPBitmapCallBack(bitmap,callback);
+            printerService.printBMPBitmapCallBack(bitmap,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printBMPBitmap(Bitmap bitmap) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return ;
         }
         try {
-            sunmiPrinterService.printBMPBitmap(bitmap);
+            printerService.printBMPBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printNvBitmapCallBack(int anInt,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return ;
         }
         try {
-            sunmiPrinterService.printNvBitmapCallBack(anInt,callback);
+            printerService.printNvBitmapCallBack(anInt,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public void printNvBitmap(int anInt) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return ;
         }
         try {
-            sunmiPrinterService.printNvBitmap(anInt);
+            printerService.printNvBitmap(anInt);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     public boolean setDownloadNvBmpCallBack(String loadPath,InnerResultCallback callback) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return false;
         }
         try {
-            return sunmiPrinterService.setDownloadNvBmpCallBack(loadPath,callback);
+            return printerService.setDownloadNvBmpCallBack(loadPath,callback);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
     public boolean setDownloadNvBmp(String loadPath) {
-        if (sunmiPrinterService == null) {
+        if (printerService == null) {
             return false;
         }
         try {
-           return sunmiPrinterService.setDownloadNvBmp(loadPath);
+           return printerService.setDownloadNvBmp(loadPath);
         } catch (Exception e) {
             e.printStackTrace();
         }
