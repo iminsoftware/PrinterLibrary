@@ -14,7 +14,7 @@ public class IminPrintUtils {
     public static int CheckPrinter = 0x00000001;
     public static int FoundPrinter = 0x00000002;
     public static int LostPrinter = 0x00000003;
-
+    boolean initPrinter = false;
     /**
      * Printer means checking the printer connection status
      */
@@ -38,6 +38,7 @@ public class IminPrintUtils {
         protected void onConnected(SunmiPrinterService service) {
             printerService = service;
             checkPrinterService(service);
+            initPrinter = false;
             Log.i("test_1_000000", "iiii   onConnected");
         }
 
@@ -45,6 +46,7 @@ public class IminPrintUtils {
         protected void onDisconnected() {
             printerService = null;
             Printer = LostPrinter;
+            initPrinter = false;
             Log.i("test_1_000000", "iiii   onDisconnected");
         }
     };
@@ -112,7 +114,7 @@ public class IminPrintUtils {
      * send esc cmd
      */
     public void sendRawData(byte[] data) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -126,8 +128,7 @@ public class IminPrintUtils {
      * Printer cuts paper and throws exception on machines without a cutter
      */
     public void cutpaper() {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -142,12 +143,12 @@ public class IminPrintUtils {
      * All style settings will be restored to default
      */
     public void initPrinter() {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
             printerService.printerInit(null);
+            initPrinter = true;
         } catch (Exception e) {
             handleException(e);
         }
@@ -158,8 +159,7 @@ public class IminPrintUtils {
      * Not disabled when line spacing is set to 0
      */
     public void print3Line() {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
             return;
         }
 
@@ -177,8 +177,8 @@ public class IminPrintUtils {
      * Get printer serial number
      */
     public String getPrinterSerialNo() {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
+            
             return "";
         }
         try {
@@ -193,8 +193,8 @@ public class IminPrintUtils {
      * Get device model
      */
     public String getDeviceModel() {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
+            
             return "";
         }
         try {
@@ -209,8 +209,8 @@ public class IminPrintUtils {
      * Get firmware version
      */
     public String getPrinterVersion() {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null|| initPrinter == false) {
+            
             return "";
         }
         try {
@@ -225,7 +225,7 @@ public class IminPrintUtils {
      * Get paper specifications
      */
     public void getPrinterFactory(InnerResultCallback callbcak) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -240,8 +240,7 @@ public class IminPrintUtils {
      * Get printing distance through interface callback since 1.0.8(printerlibrary)
      */
     public void getPrinterDistance(InnerResultCallback callback) {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -255,7 +254,7 @@ public class IminPrintUtils {
      * Set printer alignment
      */
     public void setAlign(int align) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -271,8 +270,7 @@ public class IminPrintUtils {
      * But if the Api does not support it, it will be replaced by printing three lines
      */
     public void feedPaper() {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
             return;
         }
 
@@ -289,8 +287,7 @@ public class IminPrintUtils {
      * More settings reference documentation {@link WoyouConsts}
      */
     public void printText(String content, float size, boolean isBold, boolean isUnderLine) {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
             return;
         }
 
@@ -326,7 +323,7 @@ public class IminPrintUtils {
      * print Bar Code
      */
     public void printBarCode(String data, int symbology, int height, int width, int textposition, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
 
@@ -341,7 +338,7 @@ public class IminPrintUtils {
      * print Qr Code
      */
     public void printQRCode(String data, int modulesize, int errorlevel, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
 
@@ -356,7 +353,7 @@ public class IminPrintUtils {
      * Print a row of a table
      */
     public void printColumnsString(String[] txts, int[] width, int[] align, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -374,8 +371,7 @@ public class IminPrintUtils {
      * In this example, the image will be printed because the print text content is added
      */
     public void printBitmap(Bitmap bitmap, int orientation) {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
             return;
         }
 
@@ -401,7 +397,7 @@ public class IminPrintUtils {
      */
     public boolean isBlackLabelMode() {
         if (printerService == null) {
-            //TODO Service disconnection processing
+            
             return false;
         }
         try {
@@ -416,7 +412,7 @@ public class IminPrintUtils {
      */
     public boolean isLabelMode() {
         if (printerService == null) {
-            //TODO Service disconnection processing
+            
             return false;
         }
         try {
@@ -456,7 +452,6 @@ public class IminPrintUtils {
      */
     public void controlLcd(int flag) {
         if (printerService == null) {
-            //TODO Service disconnection processing
             return;
         }
 
@@ -475,7 +470,6 @@ public class IminPrintUtils {
      */
     public void sendTextToLcd() {
         if (printerService == null) {
-            //TODO Service disconnection processing
             return;
         }
 
@@ -515,8 +509,7 @@ public class IminPrintUtils {
      * Display two lines and one empty line in the middle
      */
     public void sendTextsToLcd() {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null ) {
             return;
         }
 
@@ -567,8 +560,7 @@ public class IminPrintUtils {
      * printing
      */
     public void showPrinterStatus(Context context) {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
             return;
         }
         String result = "Interface is too low to implement interface";
@@ -622,8 +614,7 @@ public class IminPrintUtils {
      * 打印单张标签后为了方便用户撕纸可调用labelOutput,将标签纸推出纸舱口
      */
     public void printOneLabel() {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -643,8 +634,7 @@ public class IminPrintUtils {
      * 打印多张标签后根据需求选择是否推出标签纸到纸舱口
      */
     public void printMultiLabel(int num) {
-        if (printerService == null) {
-            //TODO Service disconnection processing
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -675,7 +665,7 @@ public class IminPrintUtils {
     }
 
     public void updateFirmware() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -686,7 +676,7 @@ public class IminPrintUtils {
     }
 
     public int getFirmwareStatus() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return 0;
         }
         try {
@@ -698,7 +688,7 @@ public class IminPrintUtils {
     }
 
     public String getServiceVersion() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return "";
         }
         try {
@@ -710,18 +700,19 @@ public class IminPrintUtils {
     }
 
     public void printerInit(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null ) {
             return;
         }
         try {
             printerService.printerInit(callback);
+            initPrinter = true;
         } catch (Exception e) {
             handleException(e);
         }
     }
 
     public void printerSelfChecking(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -732,7 +723,7 @@ public class IminPrintUtils {
     }
 
     public String getPrinterModal() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return "";
         }
         try {
@@ -744,7 +735,7 @@ public class IminPrintUtils {
     }
 
     public void getPrintedLength(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -756,7 +747,7 @@ public class IminPrintUtils {
     }
 
     public void lineWrap(int n, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
 
@@ -768,7 +759,7 @@ public class IminPrintUtils {
     }
 
     public void setFontSize(float fontsize, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
 
@@ -780,7 +771,7 @@ public class IminPrintUtils {
     }
 
     public void printText(String text, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
 
@@ -792,7 +783,7 @@ public class IminPrintUtils {
     }
 
     public void printTextWithFont(String text, String typeface, float fontsize, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -803,7 +794,7 @@ public class IminPrintUtils {
     }
 
     public void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -814,7 +805,7 @@ public class IminPrintUtils {
     }
 
     public void printBitmap(Bitmap bitmap, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -825,7 +816,7 @@ public class IminPrintUtils {
     }
 
     public void printOriginalText(String text, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -836,7 +827,7 @@ public class IminPrintUtils {
     }
 
     public void commitPrint(TransBean[] transbean, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -847,7 +838,7 @@ public class IminPrintUtils {
     }
 
     public void commitPrinterBuffer() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -858,7 +849,7 @@ public class IminPrintUtils {
     }
 
     public void cutPaper(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -869,7 +860,7 @@ public class IminPrintUtils {
     }
 
     public int getCutPaperTimes() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return 0;
         }
         try {
@@ -881,7 +872,7 @@ public class IminPrintUtils {
     }
 
     public int getOpenDrawerTimes() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return 0;
         }
         try {
@@ -899,7 +890,7 @@ public class IminPrintUtils {
      * result)
      */
     public void enterPrinterBuffer(boolean clean) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -910,7 +901,7 @@ public class IminPrintUtils {
     }
 
     public void exitPrinterBuffer(boolean commit) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -921,7 +912,7 @@ public class IminPrintUtils {
     }
 
     public void tax(byte[] data, InnerTaxCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -932,7 +923,7 @@ public class IminPrintUtils {
     }
 
     public void clearBuffer() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -943,7 +934,7 @@ public class IminPrintUtils {
     }
 
     public void commitPrinterBufferWithCallback(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -954,7 +945,7 @@ public class IminPrintUtils {
     }
 
     public void exitPrinterBufferWithCallback(boolean commit, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -965,7 +956,7 @@ public class IminPrintUtils {
     }
 
     public int updatePrinterState() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return -1;
         }
         try {
@@ -977,7 +968,7 @@ public class IminPrintUtils {
     }
 
     public void sendLCDCommand(int flag) {
-        if (printerService == null) {
+        if (printerService == null ) {
             return;
         }
         try {
@@ -988,7 +979,7 @@ public class IminPrintUtils {
     }
 
     public void sendLCDString(String string, InnerLcdCallback callback) {
-        if (printerService == null) {
+        if (printerService == null ) {
             return;
         }
         try {
@@ -1010,7 +1001,7 @@ public class IminPrintUtils {
     }
 
     public int getPrinterMode() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return 0;
         }
         try {
@@ -1022,7 +1013,7 @@ public class IminPrintUtils {
     }
 
     public int getPrinterBBMDistance() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return 0;
         }
         try {
@@ -1034,7 +1025,7 @@ public class IminPrintUtils {
     }
 
     public void printBitmapCustom(Bitmap bitmap, int type, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1117,7 +1108,7 @@ public class IminPrintUtils {
     }
 
     public void sendLCDDoubleString(String topText, String bottomText, InnerLcdCallback callback) {
-        if (printerService == null) {
+        if (printerService == null ) {
             return;
         }
         try {
@@ -1131,7 +1122,7 @@ public class IminPrintUtils {
      * Get paper specifications
      */
     public String getPrinterPaper() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return "";
         }
         try {
@@ -1143,7 +1134,7 @@ public class IminPrintUtils {
     }
 
     public boolean getDrawerStatus() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return false;
         }
         try {
@@ -1155,7 +1146,7 @@ public class IminPrintUtils {
     }
 
     public void sendLCDFillString(String string, int size, boolean fill, InnerLcdCallback callback) {
-        if (printerService == null) {
+        if (printerService == null ) {
             return;
         }
         try {
@@ -1166,7 +1157,7 @@ public class IminPrintUtils {
     }
 
     public void sendLCDMultiString(String[] text, int[] align, InnerLcdCallback callback) {
-        if (printerService == null) {
+        if (printerService == null ) {
             return;
         }
         try {
@@ -1177,7 +1168,7 @@ public class IminPrintUtils {
     }
 
     public int getPrinterDensity() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return 0;
         }
         try {
@@ -1189,7 +1180,7 @@ public class IminPrintUtils {
     }
 
     public void print2DCode(String data, int symbology, int modulesize, int errorlevel, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1200,7 +1191,7 @@ public class IminPrintUtils {
     }
 
     public void autoOutPaper(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1211,7 +1202,7 @@ public class IminPrintUtils {
     }
 
     public void setPrinterStyle(int key, int value) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1222,7 +1213,7 @@ public class IminPrintUtils {
     }
 
     public void labelLocate() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1233,7 +1224,7 @@ public class IminPrintUtils {
     }
 
     public void labelOutput() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1244,11 +1235,12 @@ public class IminPrintUtils {
     }
 
     public void initPrinterCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null ) {
             return;
         }
         try {
             printerService.initPrinterCallBack(anInt, callback);
+            initPrinter = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1260,6 +1252,7 @@ public class IminPrintUtils {
         }
         try {
             printerService.initPrinter(anInt);
+            initPrinter = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -1268,7 +1261,7 @@ public class IminPrintUtils {
     public int getPrinterStatusCallBack(int anInt, InnerResultCallback callback) {
 
         try {
-            if (printerService == null) {
+            if (printerService == null || initPrinter == false) {
                 if (callback != null){
                     callback.callback(-1);
                 }
@@ -1289,7 +1282,7 @@ public class IminPrintUtils {
     }
 
     public int getPrinterStatus(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return -1;
         }
         try {
@@ -1301,7 +1294,7 @@ public class IminPrintUtils {
     }
 
     public void printAndLineFeedCallBack(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1312,7 +1305,7 @@ public class IminPrintUtils {
     }
 
     public void printAndLineFeed() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1323,7 +1316,7 @@ public class IminPrintUtils {
     }
 
     public void printAndFeedPaperCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1334,7 +1327,7 @@ public class IminPrintUtils {
     }
 
     public void printAndFeedPaper(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1345,7 +1338,7 @@ public class IminPrintUtils {
     }
 
     public void partialCutCallBack(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1356,7 +1349,7 @@ public class IminPrintUtils {
     }
 
     public void partialCut() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1367,7 +1360,7 @@ public class IminPrintUtils {
     }
 
     public void setAlignmentCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1378,7 +1371,7 @@ public class IminPrintUtils {
     }
 
     public void setAlignment(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1389,7 +1382,7 @@ public class IminPrintUtils {
     }
 
     public void setTextSizeCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1400,7 +1393,7 @@ public class IminPrintUtils {
     }
 
     public void setTextSize(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1411,7 +1404,7 @@ public class IminPrintUtils {
     }
 
     public void setTextTypefaceCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1422,7 +1415,7 @@ public class IminPrintUtils {
     }
 
     public void setTextTypeface(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1433,7 +1426,7 @@ public class IminPrintUtils {
     }
 
     public void setTextStyleCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1444,7 +1437,7 @@ public class IminPrintUtils {
     }
 
     public void setTextStyle(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1455,7 +1448,7 @@ public class IminPrintUtils {
     }
 
     public void setTextLineSpacingCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1466,7 +1459,7 @@ public class IminPrintUtils {
     }
 
     public void setTextLineSpacing(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1477,7 +1470,7 @@ public class IminPrintUtils {
     }
 
     public void setTextWidthCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1488,7 +1481,7 @@ public class IminPrintUtils {
     }
 
     public void setTextWidth(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1499,7 +1492,7 @@ public class IminPrintUtils {
     }
 
     public void printTextCallBack(String text, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1510,7 +1503,7 @@ public class IminPrintUtils {
     }
 
     public void printText(String text) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1521,7 +1514,7 @@ public class IminPrintUtils {
     }
 
     public void printTextWithAliCallBack(String text, int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1532,7 +1525,7 @@ public class IminPrintUtils {
     }
 
     public void printTextWithAli(String text, int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1544,7 +1537,7 @@ public class IminPrintUtils {
 
     //////////////////////////////////
     public void printColumnsTextCallBack(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, int[] size, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1555,7 +1548,7 @@ public class IminPrintUtils {
     }
 
     public void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, int[] size) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1567,7 +1560,7 @@ public class IminPrintUtils {
 
     //////////////////////////////
     public void setBarCodeWidthCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1578,7 +1571,7 @@ public class IminPrintUtils {
     }
 
     public void setBarCodeWidth(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1590,7 +1583,7 @@ public class IminPrintUtils {
     }
 
     public void setBarCodeHeightCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1601,7 +1594,7 @@ public class IminPrintUtils {
     }
 
     public void setBarCodeHeight(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1612,7 +1605,7 @@ public class IminPrintUtils {
     }
 
     public void setBarCodeContentPrintPosCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1623,7 +1616,7 @@ public class IminPrintUtils {
     }
 
     public void setBarCodeContentPrintPos(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1633,7 +1626,7 @@ public class IminPrintUtils {
         }
     }
     public void printBarCodeCallBack(int anInt,String data, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1644,7 +1637,7 @@ public class IminPrintUtils {
     }
 
     public void printBarCode(int anInt,String data) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1654,7 +1647,7 @@ public class IminPrintUtils {
         }
     }
     public void printBarCodeWithAlignCallBack(int anInt,String data, int alignments, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1665,7 +1658,7 @@ public class IminPrintUtils {
     }
 
     public void printBarCodeWithAlign(int anInt,String data, int alignments) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1675,7 +1668,7 @@ public class IminPrintUtils {
         }
     }
     public void setQrCodeSizeCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1686,7 +1679,7 @@ public class IminPrintUtils {
     }
 
     public void setQrCodeSize(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1696,7 +1689,7 @@ public class IminPrintUtils {
         }
     }
     public void setQrCodeErrorCorrectionLevCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1707,7 +1700,7 @@ public class IminPrintUtils {
     }
 
     public void setQrCodeErrorCorrectionLev(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1717,7 +1710,7 @@ public class IminPrintUtils {
         }
     }
     public void setLeftMarginCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1728,7 +1721,7 @@ public class IminPrintUtils {
     }
 
     public void setLeftMargin(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1738,7 +1731,7 @@ public class IminPrintUtils {
         }
     }
     public void printQrCodeCallBack(String anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1749,7 +1742,7 @@ public class IminPrintUtils {
     }
 
     public void printQrCode(String anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1759,7 +1752,7 @@ public class IminPrintUtils {
         }
     }
     public void printQrCodeWithAlignCallBack(String anInt, int alignments, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1770,7 +1763,7 @@ public class IminPrintUtils {
     }
 
     public void printQrCodeWithAlign(String anInt, int alignments) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1780,7 +1773,7 @@ public class IminPrintUtils {
         }
     }
     public void setPageFormatCallBack(int anInt, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1791,7 +1784,7 @@ public class IminPrintUtils {
     }
 
     public void setPageFormat(int anInt) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1801,7 +1794,7 @@ public class IminPrintUtils {
         }
     }
     public void printSingleBitmapCallBack(Bitmap bitmap, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1812,7 +1805,7 @@ public class IminPrintUtils {
     }
 
     public void printSingleBitmap(Bitmap bitmap) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1822,7 +1815,7 @@ public class IminPrintUtils {
         }
     }
     public void printSingleBitmapWithAlignCallBack(Bitmap bitmap, int alignments, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1833,7 +1826,7 @@ public class IminPrintUtils {
     }
 
     public void printSingleBitmapWithAlign(Bitmap bitmap, int alignments) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1843,7 +1836,7 @@ public class IminPrintUtils {
         }
     }
     public void printMultiBitmapCallBack(List<Bitmap> bitmap, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1854,7 +1847,7 @@ public class IminPrintUtils {
     }
 
     public void printMultiBitmap(List<Bitmap> bitmap) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1864,7 +1857,7 @@ public class IminPrintUtils {
         }
     }
     public void printMultiBitmapWithAlignCallBack(List<Bitmap> bitmap, int alignments, InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1875,7 +1868,7 @@ public class IminPrintUtils {
     }
 
     public void printMultiBitmapWithAlign(List<Bitmap> bitmap, int alignments) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1885,7 +1878,7 @@ public class IminPrintUtils {
         }
     }
     public void resetDeviceCallBack(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null ) {
             return;
         }
         try {
@@ -1896,7 +1889,7 @@ public class IminPrintUtils {
     }
 
     public void resetDevice() {
-        if (printerService == null) {
+        if (printerService == null ) {
             return;
         }
         try {
@@ -1906,7 +1899,7 @@ public class IminPrintUtils {
         }
     }
     public void fullCutCallBack(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1917,7 +1910,7 @@ public class IminPrintUtils {
     }
 
     public void fullCut() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1927,7 +1920,7 @@ public class IminPrintUtils {
         }
     }
     public void sendRAWDataCallBack(int[] ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1938,7 +1931,7 @@ public class IminPrintUtils {
     }
 
     public void sendRAWData(int[] ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1948,7 +1941,7 @@ public class IminPrintUtils {
         }
     }
     public void sendRAWDataStringCallBack(String ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1959,7 +1952,7 @@ public class IminPrintUtils {
     }
 
     public void sendRAWDataString(String ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1969,7 +1962,7 @@ public class IminPrintUtils {
         }
     }
     public void sendRAWDataByteCallBack(byte[] ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1980,7 +1973,7 @@ public class IminPrintUtils {
     }
 
     public void sendRAWDataByte(byte[] ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -1990,7 +1983,7 @@ public class IminPrintUtils {
         }
     }
     public void setUnderlineCallBack(boolean ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2001,7 +1994,7 @@ public class IminPrintUtils {
     }
 
     public void setUnderline(boolean ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2011,7 +2004,7 @@ public class IminPrintUtils {
         }
     }
     public void sethaveBoldCallBack(boolean ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2022,7 +2015,7 @@ public class IminPrintUtils {
     }
 
     public void sethaveBold(boolean ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2032,7 +2025,7 @@ public class IminPrintUtils {
         }
     }
     public void setHaveLineHeightCallBack(float ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2043,7 +2036,7 @@ public class IminPrintUtils {
     }
 
     public void setHaveLineHeight(float ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2053,7 +2046,7 @@ public class IminPrintUtils {
         }
     }
     public void printerByteWithByteCallBack(byte[] ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2064,7 +2057,7 @@ public class IminPrintUtils {
     }
 
     public void printerByteWithByte(byte[] ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2074,7 +2067,7 @@ public class IminPrintUtils {
         }
     }
     public void printerByteCallBack(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2085,7 +2078,7 @@ public class IminPrintUtils {
     }
 
     public void printerByte() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2095,7 +2088,7 @@ public class IminPrintUtils {
         }
     }
     public void setDoubleQRSizeCallBack(float ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2106,7 +2099,7 @@ public class IminPrintUtils {
     }
 
     public void setDoubleQRSize(float ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2116,7 +2109,7 @@ public class IminPrintUtils {
         }
     }
     public void setDoubleQR1MarginLeftCallBack(float ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2127,7 +2120,7 @@ public class IminPrintUtils {
     }
 
     public void setDoubleQR1MarginLeft(float ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2137,7 +2130,7 @@ public class IminPrintUtils {
         }
     }
     public void setDoubleQR2MarginLeftCallBack(float ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2148,7 +2141,7 @@ public class IminPrintUtils {
     }
 
     public void setDoubleQR2MarginLeft(float ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2158,7 +2151,7 @@ public class IminPrintUtils {
         }
     }
     public void setDoubleQR1LevelCallBack(int ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2169,7 +2162,7 @@ public class IminPrintUtils {
     }
 
     public void setDoubleQR1Level(int ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2179,7 +2172,7 @@ public class IminPrintUtils {
         }
     }
     public void setDoubleQR2LevelCallBack(int ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2190,7 +2183,7 @@ public class IminPrintUtils {
     }
 
     public void setDoubleQR2Level(int ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2200,7 +2193,7 @@ public class IminPrintUtils {
         }
     }
     public void setDoubleQR1VersionCallBack(int ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2211,7 +2204,7 @@ public class IminPrintUtils {
     }
 
     public void setDoubleQR1Version(int ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2221,7 +2214,7 @@ public class IminPrintUtils {
         }
     }
     public void setDoubleQR2VersionCallBack(int ints,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2232,7 +2225,7 @@ public class IminPrintUtils {
     }
 
     public void setDoubleQR2Version(int ints) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2242,7 +2235,7 @@ public class IminPrintUtils {
         }
     }
     public void printDoubleQRCallBack(String qr1,String qr2,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2253,7 +2246,7 @@ public class IminPrintUtils {
     }
 
     public void printDoubleQR(String qr1,String qr2) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2263,7 +2256,7 @@ public class IminPrintUtils {
         }
     }
     public void initParamsCallBack(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2274,7 +2267,7 @@ public class IminPrintUtils {
     }
 
     public void initParams() {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2284,7 +2277,7 @@ public class IminPrintUtils {
         }
     }
     public void initParamsIsClearCallBack(boolean isClearCache,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2295,7 +2288,7 @@ public class IminPrintUtils {
     }
 
     public void initParamsIsClear(boolean isClearCache) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return;
         }
         try {
@@ -2305,7 +2298,7 @@ public class IminPrintUtils {
         }
     }
     public int getForcedRowHeightCallBack(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return 0;
         }
         try {
@@ -2317,7 +2310,7 @@ public class IminPrintUtils {
     }
 
     public boolean isForcedBoldCallBack(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return false;
         }
         try {
@@ -2328,7 +2321,7 @@ public class IminPrintUtils {
         return false;
     }
     public boolean isForcedUnderlineCallBack(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null|| initPrinter == false) {
             return false;
         }
         try {
@@ -2339,7 +2332,7 @@ public class IminPrintUtils {
         return false;
     }
     public int getPrinterDensityCallBack(InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return 100;
         }
         try {
@@ -2350,8 +2343,8 @@ public class IminPrintUtils {
         return 100;
     }
     public void initBluePrinterCallBack(int anInt, BluetoothDevice device, InnerResultCallback callback) {
-        if (printerService == null) {
-            return ;
+        if (printerService == null ) {
+            return;
         }
         try {
             printerService.initBluePrinterCallBack(anInt,device,callback);
@@ -2360,8 +2353,8 @@ public class IminPrintUtils {
         }
     }
     public void initBluePrinter(int anInt, BluetoothDevice device) {
-        if (printerService == null) {
-            return ;
+        if (printerService == null ) {
+            return;
         }
         try {
             printerService.initBluePrinter(anInt,device);
@@ -2370,8 +2363,8 @@ public class IminPrintUtils {
         }
     }
     public void printBMPBitmapCallBack(Bitmap bitmap, InnerResultCallback callback) {
-        if (printerService == null) {
-            return ;
+        if (printerService == null || initPrinter == false) {
+            return;
         }
         try {
             printerService.printBMPBitmapCallBack(bitmap,callback);
@@ -2380,8 +2373,8 @@ public class IminPrintUtils {
         }
     }
     public void printBMPBitmap(Bitmap bitmap) {
-        if (printerService == null) {
-            return ;
+        if (printerService == null || initPrinter == false) {
+            return;
         }
         try {
             printerService.printBMPBitmap(bitmap);
@@ -2390,8 +2383,8 @@ public class IminPrintUtils {
         }
     }
     public void printNvBitmapCallBack(int anInt,InnerResultCallback callback) {
-        if (printerService == null) {
-            return ;
+        if (printerService == null || initPrinter == false) {
+            return;
         }
         try {
             printerService.printNvBitmapCallBack(anInt,callback);
@@ -2400,8 +2393,8 @@ public class IminPrintUtils {
         }
     }
     public void printNvBitmap(int anInt) {
-        if (printerService == null) {
-            return ;
+        if (printerService == null || initPrinter == false) {
+            return;
         }
         try {
             printerService.printNvBitmap(anInt);
@@ -2410,7 +2403,7 @@ public class IminPrintUtils {
         }
     }
     public boolean setDownloadNvBmpCallBack(String loadPath,InnerResultCallback callback) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return false;
         }
         try {
@@ -2421,7 +2414,7 @@ public class IminPrintUtils {
         return false;
     }
     public boolean setDownloadNvBmp(String loadPath) {
-        if (printerService == null) {
+        if (printerService == null || initPrinter == false) {
             return false;
         }
         try {
