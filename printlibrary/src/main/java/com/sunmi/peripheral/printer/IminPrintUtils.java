@@ -1262,11 +1262,14 @@ public class IminPrintUtils {
     }
 
     // 0：打印机正常   -1：打印机未连接或未上电   3：打印头打开    7：纸尽    8：纸将尽
-    // 99：其它错误    5：打印头过热     11: 电量不足   12：打印升级中    13.未找到打印机
+    // 99：其它错误    5：打印头过热     101: 电量不足   102：打印升级中    103.未找到打印机
     public int getPrinterStatusCallBack(int anInt, InnerResultCallback callback) {
         try {
             if (printerService == null){
-                return 13;
+                if (callback != null){
+                    callback.callback(103);
+                }
+                return 103;
             }
             if (printerService == null || initPrinter == false) {
                 if (callback != null){
@@ -1277,8 +1280,10 @@ public class IminPrintUtils {
 
             if (mContext != null){
                 if (Utils.getElect(mContext) <5){
-                    callback.callback(11);
-                    return 11;
+                    if (callback != null){
+                        callback.callback(101);
+                    }
+                    return 101;
                 }
             }
             return printerService.getPrinterStatusCallBack(anInt, callback);
@@ -1297,14 +1302,14 @@ public class IminPrintUtils {
 
     public int getPrinterStatus(int anInt) {
         if (printerService == null){
-            return 13;
+            return 103;
         }
         if (printerService == null || initPrinter == false) {
             return -1;
         }
         if (mContext != null){
             if (Utils.getElect(mContext) <5){
-                return 11;
+                return 101;
             }
         }
         try {
