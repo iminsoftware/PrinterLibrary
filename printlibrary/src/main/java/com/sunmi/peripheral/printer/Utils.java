@@ -1,5 +1,8 @@
 package com.sunmi.peripheral.printer;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Build;
 import android.os.SystemProperties;
 import android.text.TextUtils;
@@ -122,16 +125,20 @@ public class Utils {
             case "V2BXX":
                 return "D2 Pro";
             case "W26XX":
+            case "W26PX":
                 return "D3-504";
             case "W26MX":
+            case "W26MP":
                 return "D3-505";
             case "W27LX":
                 return "D4-501";
             case "W27LD":
                 return "D4-502";
             case "W27XX":
+            case "W27PX":
                 return "D4-503";
             case "W27MX":
+            case "W27MP":
                 return "D4-504";
             case "W27DX":
                 return "D4-505";
@@ -148,6 +155,7 @@ public class Utils {
             case "W17BX":
                 return "S1-702";
             case "W17XX":
+            case "W17PX"://rk3566,android11
                 return "S1-701";
             case "W26HX":
                 return "D3-504";
@@ -156,6 +164,7 @@ public class Utils {
             case "W26HD":
                 return "D3-506";
             case "W26HG":
+            case "W26GP":
                 return "K2-201";
             case "D224G":
                 return "R2-301";//D224GM04SXXT3PXW3E1MXV110CDXXX
@@ -165,6 +174,14 @@ public class Utils {
                 return "R2-302";
             case "W27DP":
                 return "D4-505(Premium)";
+            case "K21PX":
+                return "K1-101";
+            case "W23PX":
+                return "D1w-701";
+            case "W23MP":
+                return "D1w-702";
+            case "W23DP":
+                return "D1w-703";
             default:
                 break;
         }
@@ -191,5 +208,13 @@ public class Utils {
             e.printStackTrace();
         }
         return false;
+    }
+
+    //获取电量
+    public static int getElect(Context context) {
+        IntentFilter filter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        Intent receiver = context.registerReceiver(null, filter);
+        int level = receiver.getIntExtra("level", 0);//获取当前电量
+        return level/*"" + level + "%"*/;
     }
 }
