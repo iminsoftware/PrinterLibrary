@@ -1261,8 +1261,8 @@ public class IminPrintUtils {
         }
     }
 
-    // 0：打印机正常   -1：打印机未连接或未上电   3：打印头打开    7：纸尽    8：纸将尽
-    // 99：其它错误    5：打印头过热     101: 电量不足   102：打印升级中    103.未找到打印机
+    // 0：打印机正常   -1：打印机未连接或未上电  3：打印头打开/缺纸
+    // 99：其它错误   5：打印头过热     101: 电量不足   102：打印升级中    103.未找到打印机  104.打印机过热恢复正常
     public int getPrinterStatusCallBack(int anInt, InnerResultCallback callback) {
         try {
             if (printerService == null){
