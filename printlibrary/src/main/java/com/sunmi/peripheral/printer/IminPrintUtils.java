@@ -796,7 +796,7 @@ public class IminPrintUtils {
         }
     }
 
-    public void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, InnerResultCallback callback) {
+    public void printColumnsTextWithCallBack(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, InnerResultCallback callback) {
         if (printerService == null || initPrinter == false) {
             return;
         }
