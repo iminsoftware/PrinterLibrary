@@ -1,4 +1,4 @@
-PrinterDemo
+PrinterLibrary
 ==========
 ### 
 Please be sure to read the documentation when using Demo and You can find 
@@ -9,7 +9,7 @@ We strongly recommend developers to use Android Studio to develop.The demo for A
 ## Library
     
     dependencies{
-      implementation 'com.sunmi:printerlibrary:1.0.13'
+      implementation 'com.github.iminsoftware:PrinterLibrary:v1.0'
     }
     
 Now we replaced AIDL integration with Sunmi Printer Interface Library.  
