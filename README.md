@@ -1,4 +1,4 @@
-SunmiPrinterDemo
+PrinterDemo
 ==========
 ### 
 Please be sure to read the documentation when using Demo and You can find 
