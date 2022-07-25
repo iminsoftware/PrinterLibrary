@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.library'
+    id 'com.github.dcendents.android-maven'
 }
+group='com.github.iminsoftware'
 
 android {
     compileSdkVersion 32
@@ -24,16 +26,16 @@ android {
     }
 
     //生成jar包
-    task makeJar(type: Copy) {
-        //产生jar包代码来源，其中runtime_library_classes这段路径不同版本的
-        //androidstudio 路径来源会有不同。
-        delete 'build/libs/printerLibrary.jar'
-        from('build/intermediates/runtime_library_classes/debug/') //jar文件来源
-        into('build/libs/') //最终jar的生成路径
-        include('classes.jar')
-        rename('classes.jar', 'printerLibrary.jar') //命名为comlibrary.jar
-    }
-    makeJar.dependsOn(build)
+//    task makeJar(type: Copy) {
+//        //产生jar包代码来源，其中runtime_library_classes这段路径不同版本的
+//        //androidstudio 路径来源会有不同。
+//        delete 'build/libs/printerLibrary.jar'
+//        from('build/intermediates/runtime_library_classes/debug/') //jar文件来源
+//        into('build/libs/') //最终jar的生成路径
+//        include('classes.jar')
+//        rename('classes.jar', 'printerLibrary.jar') //命名为comlibrary.jar
+//    }
+//    makeJar.dependsOn(build)
 }
 
 dependencies {
