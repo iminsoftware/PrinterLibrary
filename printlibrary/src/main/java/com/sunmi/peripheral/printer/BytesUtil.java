@@ -3,11 +3,6 @@ package com.sunmi.peripheral.printer;
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.util.Hashtable;
 
@@ -145,63 +140,7 @@ public class BytesUtil {
 		return data;
 	}
 
-	/**
-	 * 生成二维码字节流
-	 *
-	 * @param data
-	 * @param size
-	 * @return
-	 */
-	public static byte[] getZXingQRCode(String data, int size) {
-		try {
-			Hashtable<EncodeHintType, String> hints = new Hashtable<EncodeHintType, String>();
-			hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
-			//图像数据转换，使用了矩阵转换
-			BitMatrix bitMatrix = new QRCodeWriter().encode(data, BarcodeFormat.QR_CODE, size, size, hints);
-			//System.out.println("bitmatrix height:" + bitMatrix.getHeight() + " width:" + bitMatrix.getWidth());
-			return getBytesFromBitMatrix(bitMatrix);
-		} catch (WriterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
 
-	public static byte[] getBytesFromBitMatrix(BitMatrix bits) {
-		if (bits == null) return null;
-
-		int h = bits.getHeight();
-		int w = (bits.getWidth() + 7) / 8;
-		byte[] rv = new byte[h * w + 4];
-
-		rv[0] = (byte) w;//xL
-		rv[1] = (byte) (w >> 8);//xH
-		rv[2] = (byte) h;
-		rv[3] = (byte) (h >> 8);
-
-		int k = 4;
-		for (int i = 0; i < h; i++) {
-			for (int j = 0; j < w; j++) {
-				for (int n = 0; n < 8; n++) {
-					byte b = getBitMatrixColor(bits, j * 8 + n, i);
-					rv[k] += rv[k] + b;
-				}
-				k++;
-			}
-		}
-		return rv;
-	}
-
-	private static byte getBitMatrixColor(BitMatrix bits, int x, int y) {
-		int width = bits.getWidth();
-		int height = bits.getHeight();
-		if (x >= width || y >= height || x < 0 || y < 0) return 0;
-		if (bits.get(x, y)) {
-			return 1;
-		} else {
-			return 0;
-		}
-	}
 
 	/**
 	 * 将bitmap图转换为头四位有宽高的光栅位图

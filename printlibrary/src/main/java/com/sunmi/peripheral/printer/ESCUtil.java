@@ -96,19 +96,6 @@ public class ESCUtil {
 		return buffer.toByteArray();
 	}
 
-	/**
-	 * 光栅打印二维码
-	 */
-	public static byte[] getPrintQRCode2(String data, int size){
-		byte[] bytes1  = new byte[4];
-		bytes1[0] = GS;
-		bytes1[1] = 0x76;
-		bytes1[2] = 0x30;
-		bytes1[3] = 0x00;
-
-		byte[] bytes2 = BytesUtil.getZXingQRCode(data, size);
-		return BytesUtil.byteMerger(bytes1, bytes2);
-	}
 
 	/**
 	 * 打印一维条形码
