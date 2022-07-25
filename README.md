@@ -15,9 +15,8 @@ We strongly recommend developers to use Android Studio to develop.The demo for A
 Now we replaced AIDL integration with Sunmi Printer Interface Library.  
 It is suitable for any Sunmi device.  
 
-## AIDL  
-If you have to use AIDL to integrate projects， you can get AIDL resource from http://sunmi-ota.oss-cn-hangzhou.aliyuncs.com/DOC/resource/re_cn/AIDL%E6%96%87%E4%BB%B6/aidl.zip
-You can see simple use from Demo for Eclipse:https://github.com/shangmisunmi/SunmiPrinterDemo-Eclipse-  
+## Docs  
+(https://oss-sg.imin.sg/docs/en/PrinterSDK.html)
 
 ## Instruction
 
