@@ -36,6 +36,27 @@ android {
 //        rename('classes.jar', 'printerLibrary.jar') //命名为comlibrary.jar
 //    }
 //    makeJar.dependsOn(build)
+
+//    afterEvaluate {
+//        publishing {
+//            publications {
+//                release(MavenPublication) {
+//                    from components.release
+//
+//                    groupId = 'com.github.iminsoftware'
+//                    artifactId = 'PrinterLibrary'
+//                    version = '1.0.0'
+//                }
+////                debug(MavenPublication) {
+////                    from components.debug
+////
+////                    groupId = 'com.github.iminsoftware'
+////                    artifactId = 'PrinterLibrary'
+////                    version = '1.0.0'
+////                }
+//            }
+//        }
+//    }
 }
 
 dependencies {
