@@ -2,7 +2,7 @@ PrinterLibrary
 ==========
 ### 
 Please be sure to read the documentation when using Demo and You can find 
-developer documentation from https://docs.sunmi.com
+developer documentation from(https://oss-sg.imin.sg/docs/en/PrinterSDK.html)
 ###
 We strongly recommend developers to use Android Studio to develop.The demo for Android Studio has full functionality, such as printing barcodes, printing qr code, printing text, printing pictures and printing tables.  
 
