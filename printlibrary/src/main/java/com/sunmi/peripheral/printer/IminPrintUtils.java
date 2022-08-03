@@ -2375,6 +2375,7 @@ public class IminPrintUtils {
         }
         try {
             printerService.initBluePrinterCallBack(anInt,device,callback);
+            initPrinter = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -2385,6 +2386,7 @@ public class IminPrintUtils {
         }
         try {
             printerService.initBluePrinter(anInt,device);
+            initPrinter = true;
         } catch (Exception e) {
             e.printStackTrace();
         }
