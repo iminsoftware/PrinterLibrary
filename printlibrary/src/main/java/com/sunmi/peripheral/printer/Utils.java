@@ -1,15 +1,13 @@
 package com.sunmi.peripheral.printer;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Build;
-import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Log;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
@@ -188,27 +186,37 @@ public class Utils {
         return "";
     }
 
-    public static boolean isSPIPrint() {
-        if (TextUtils.equals("M2-202", Build.MODEL)) {
-            return SystemProperties.getBoolean("persist.sys.isSPI", false);
-        } else if (TextUtils.equals("M2-Pro", Build.MODEL)) {
-            return true;
-        }
-        BufferedReader reader;
+    public static String getSystemProperty(String key) {
         try {
-            reader = new BufferedReader(new FileReader("/proc/neostra_hw_info"));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                Log.d("printlibrary", "hasSPI" + line.contains("SPI=ON"));
-                return line.contains("SPI=ON") ? true : false;
-            }
-            reader.close();
-        } catch (Exception e) {
-            // TODO Auto-generated catch block\r
-            e.printStackTrace();
-        }
-        return false;
+            @SuppressLint("PrivateApi")
+            Class<?> clz = Class.forName("android.os.SystemProperties");
+            Method getMethod = clz.getMethod("get", String.class, String.class);
+            return (String) getMethod.invoke(clz, key, "");
+        } catch (Exception e) {/**/}
+        return "";
     }
+
+//    public static boolean isSPIPrint() {
+//        if (TextUtils.equals("M2-202", Build.MODEL)) {
+//            return SystemProperties.getBoolean("persist.sys.isSPI", false);
+//        } else if (TextUtils.equals("M2-Pro", Build.MODEL)) {
+//            return true;
+//        }
+//        BufferedReader reader;
+//        try {
+//            reader = new BufferedReader(new FileReader("/proc/neostra_hw_info"));
+//            String line;
+//            while ((line = reader.readLine()) != null) {
+//                Log.d("printlibrary", "hasSPI" + line.contains("SPI=ON"));
+//                return line.contains("SPI=ON") ? true : false;
+//            }
+//            reader.close();
+//        } catch (Exception e) {
+//            // TODO Auto-generated catch block\r
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
 
     //获取电量
     public static int getElect(Context context) {

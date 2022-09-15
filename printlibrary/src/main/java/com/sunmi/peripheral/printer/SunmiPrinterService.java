@@ -7,7 +7,6 @@ import android.os.IBinder;
 import android.os.IInterface;
 import android.os.Parcel;
 import android.os.RemoteException;
-import android.os.SystemProperties;
 
 import java.util.List;
 import java.util.Locale;
@@ -2569,7 +2568,7 @@ public interface SunmiPrinterService extends IInterface {
             }
 
             private void setTable() {
-                String model = SystemProperties.get("ro.sunmi.hardware").toUpperCase(Locale.ENGLISH);
+                String model = Utils.getSystemProperty("ro.sunmi.hardware").toUpperCase(Locale.ENGLISH);
                 if(model.contains("V2") || model.contains("P2") || model.contains("P1")
                         || model.contains("V1S") || "QBAO_H1".equals(model)){
                     transaction_table = Stub.TRANSCTION_DATASHEET[0];
