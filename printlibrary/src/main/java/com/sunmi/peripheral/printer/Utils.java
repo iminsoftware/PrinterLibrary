@@ -79,6 +79,7 @@ public class Utils {
         return getSystemProperties("ro.board.platform");
     }
 
+
     public static String getSystemProperties(String property) {
         String value = "";
         try {
