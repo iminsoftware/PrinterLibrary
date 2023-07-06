@@ -18,9 +18,9 @@ public interface SunmiPrinterService extends IInterface {
 
     String getServiceVersion() throws RemoteException;
 
-    void printerInit(InnerResultCallback callback) throws RemoteException;
+    void printerInit(ICallback callback) throws RemoteException;
 
-    void printerSelfChecking(InnerResultCallback callback) throws RemoteException;
+    void printerSelfChecking(ICallback callback) throws RemoteException;
 
     String getPrinterSerialNo() throws RemoteException;
 
@@ -28,42 +28,42 @@ public interface SunmiPrinterService extends IInterface {
 
     String getPrinterModal() throws RemoteException;
 
-    void getPrintedLength(InnerResultCallback callback) throws RemoteException;
+    void getPrintedLength(ICallback callback) throws RemoteException;
 
-    void lineWrap(int n, InnerResultCallback callback) throws RemoteException;
+    void lineWrap(int n, ICallback callback) throws RemoteException;
 
-    void sendRAWData(byte[] data, InnerResultCallback callback) throws RemoteException;
+    void sendRAWData(int[] data, ICallback callback) throws RemoteException;
 
-    void setAlignment(int alignment, InnerResultCallback callback) throws RemoteException;
+    void setAlignment(int alignment, ICallback callback) throws RemoteException;
 
-    void setFontName(String typeface, InnerResultCallback callback) throws RemoteException;
+    void setFontName(String typeface, ICallback callback) throws RemoteException;
 
-    void setFontSize(float fontsize, InnerResultCallback callback) throws RemoteException;
+    void setFontSize(float fontsize, ICallback callback) throws RemoteException;
 
-    void printText(String text, InnerResultCallback callback) throws RemoteException;
+    void printText(String text, ICallback callback) throws RemoteException;
 
-    void printTextWithFont(String text, String typeface, float fontsize, InnerResultCallback callback) throws RemoteException;
+    void printTextWithFont(String text, String typeface, float fontsize, ICallback callback) throws RemoteException;
 
-    void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, InnerResultCallback callback) throws RemoteException;
+    void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, ICallback callback) throws RemoteException;
 
-    void printBitmap(Bitmap bitmap, InnerResultCallback callback) throws RemoteException;
+    void printBitmap(Bitmap bitmap, ICallback callback) throws RemoteException;
 
-    void printBarCode(String data, int symbology, int height, int width, int textposition, InnerResultCallback callback) throws RemoteException;
+    void printBarCode(String data, int symbology, int height, int width, int textposition, ICallback callback) throws RemoteException;
 
 
-    void printQRCode(String data, int modulesize, int errorlevel, InnerResultCallback callback) throws RemoteException;
+    void printQRCode(String data, int modulesize, int errorlevel, ICallback callback) throws RemoteException;
 
-    void printOriginalText(String text, InnerResultCallback callback) throws RemoteException;
+    void printOriginalText(String text, ICallback callback) throws RemoteException;
 
-    void commitPrint(TransBean[] transbean, InnerResultCallback callback) throws RemoteException;
+    void commitPrint(TransBean[] transbean, ICallback callback) throws RemoteException;
 
     void commitPrinterBuffer() throws RemoteException;
 
-    void cutPaper(InnerResultCallback callback) throws RemoteException;
+    void cutPaper(ICallback callback) throws RemoteException;
 
     int getCutPaperTimes() throws RemoteException;
 
-    void openDrawer(InnerResultCallback callback) throws RemoteException;
+    void openDrawer(ICallback callback) throws RemoteException;
 
     int getOpenDrawerTimes() throws RemoteException;
 
@@ -73,15 +73,15 @@ public interface SunmiPrinterService extends IInterface {
 
     void tax(byte[] data, InnerTaxCallback callback) throws RemoteException;
 
-    void getPrinterFactory(InnerResultCallback callback) throws RemoteException;
+    void getPrinterFactory(ICallback callback) throws RemoteException;
 
     void clearBuffer() throws RemoteException;
 
-    void commitPrinterBufferWithCallback(InnerResultCallback callback) throws RemoteException;
+    void commitPrinterBufferWithCallback(ICallback callback) throws RemoteException;
 
-    void exitPrinterBufferWithCallback(boolean commit, InnerResultCallback callback) throws RemoteException;
+    void exitPrinterBufferWithCallback(boolean commit, ICallback callback) throws RemoteException;
 
-    void printColumnsString(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, InnerResultCallback callback) throws RemoteException;
+    void printColumnsString(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, ICallback callback) throws RemoteException;
 
     int updatePrinterState() throws RemoteException;
 
@@ -95,7 +95,7 @@ public interface SunmiPrinterService extends IInterface {
 
     int getPrinterBBMDistance() throws RemoteException;
 
-    void printBitmapCustom(Bitmap bitmap, int type, InnerResultCallback callback) throws RemoteException;
+    void printBitmapCustom(Bitmap bitmap, int type, ICallback callback) throws RemoteException;
 
     int getForcedDouble() throws RemoteException;
 
@@ -121,26 +121,25 @@ public interface SunmiPrinterService extends IInterface {
 
     int getPrinterDensity() throws RemoteException;
 
-    void print2DCode(String data, int symbology, int modulesize, int errorlevel, InnerResultCallback callback) throws RemoteException;
+    void print2DCode(String data, int symbology, int modulesize, int errorlevel, ICallback callback) throws RemoteException;
 
-    void autoOutPaper(InnerResultCallback callback) throws RemoteException;
+    void autoOutPaper(ICallback callback) throws RemoteException;
 
     void setPrinterStyle(int key, int value) throws RemoteException;
 
     void labelLocate() throws RemoteException;
 
     void labelOutput() throws RemoteException;
-
     /**
      * 1 初始化打印机
      */
-    public void initPrinterCallBack(int anInt,InnerResultCallback callback) throws RemoteException;
+    public void initPrinterCallBack(int anInt,ICallback callback) throws RemoteException;
     public void initPrinter(int anInt) throws RemoteException;
     /**
      * 2 获取打印机状态
      * 返回：
      */
-    public int getPrinterStatusCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public int getPrinterStatusCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      *  获取打印机状态
      *
@@ -155,12 +154,12 @@ public interface SunmiPrinterService extends IInterface {
      * 走纸
      * 返回：
      */
-    public void printAndLineFeedCallBack(InnerResultCallback callback) throws RemoteException;
+    public void printAndLineFeedCallBack(ICallback callback) throws RemoteException;
     /**
      * 4 走纸 指定高度
      * 返回：
      */
-    public void printAndFeedPaperCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void printAndFeedPaperCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 走纸 指定高度
      * 返回：
@@ -175,12 +174,12 @@ public interface SunmiPrinterService extends IInterface {
      * 切纸
      * 返回：
      */
-    public void partialCutCallBack(InnerResultCallback callback) throws RemoteException;
+    public void partialCutCallBack(ICallback callback) throws RemoteException;
     /**
      * 6 设置文本对齐方式
      * 返回：
      */
-    public void setAlignmentCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setAlignmentCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置文本对齐方式
      * 返回：
@@ -190,7 +189,7 @@ public interface SunmiPrinterService extends IInterface {
      * 7 设置文本字体大小
      * 返回：
      */
-    public void setTextSizeCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setTextSizeCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置文本字体大小
      * 返回：
@@ -200,7 +199,7 @@ public interface SunmiPrinterService extends IInterface {
      * 8 设置字体
      * 返回：
      */
-    public void setTextTypefaceCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setTextTypefaceCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置字体
      * 返回：
@@ -210,7 +209,7 @@ public interface SunmiPrinterService extends IInterface {
      * 9 设置字体样式
      * 返回：
      */
-    public void setTextStyleCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setTextStyleCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置字体样式
      * 返回：
@@ -220,7 +219,7 @@ public interface SunmiPrinterService extends IInterface {
      * 10 设置行间距
      * 返回：
      */
-    public void setTextLineSpacingCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setTextLineSpacingCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置行间距
      * 返回：
@@ -230,7 +229,7 @@ public interface SunmiPrinterService extends IInterface {
      * 11 设置打印宽度
      * 返回：
      */
-    public void setTextWidthCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setTextWidthCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置打印宽度
      * 返回：
@@ -240,7 +239,7 @@ public interface SunmiPrinterService extends IInterface {
      * 12 打印文本
      * 返回：
      */
-    public void printTextCallBack(String text, InnerResultCallback callback) throws RemoteException;
+    public void printTextCallBack(String text, ICallback callback) throws RemoteException;
     /**
      * 打印文本
      * 返回：
@@ -250,7 +249,7 @@ public interface SunmiPrinterService extends IInterface {
      * 13 打印文本,对齐方式
      * 返回：
      */
-    public void printTextWithAliCallBack(String text, int anInt, InnerResultCallback callback) throws RemoteException;
+    public void printTextWithAliCallBack(String text, int anInt, ICallback callback) throws RemoteException;
     /**
      * 打印文本 ,对齐方式
      * 返回：
@@ -263,7 +262,7 @@ public interface SunmiPrinterService extends IInterface {
      * colsAlign：     各列对齐方式(0居左, 1居中, 2居右)
      * 备注: 三个参数的数组长度应该一致, 如果colsText[i]的宽度大于colsWidth[i], 则文本换行
      */
-    public void printColumnsTextCallBack(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign,int[] size, InnerResultCallback callback) throws RemoteException;
+    public void printColumnsTextCallBack(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign,int[] size, ICallback callback) throws RemoteException;
     /**
      * 打印表格的一行，可以指定列宽、对齐方式
      * colsTextArr：   各列文本字符串数组
@@ -276,7 +275,7 @@ public interface SunmiPrinterService extends IInterface {
      * 15 设置条形码宽度
      * 返回：
      */
-    public void setBarCodeWidthCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setBarCodeWidthCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置条形码宽度
      * 返回：
@@ -286,7 +285,7 @@ public interface SunmiPrinterService extends IInterface {
      * 16 设置条形码的高度
      * 返回：
      */
-    public void setBarCodeHeightCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setBarCodeHeightCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置条形码的高度
      * 返回：
@@ -296,7 +295,7 @@ public interface SunmiPrinterService extends IInterface {
      * 17 打印条形码时，请选择HRI字符的打印位置
      * 返回：
      */
-    public void setBarCodeContentPrintPosCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setBarCodeContentPrintPosCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 打印条形码时，请选择HRI字符的打印位置
      * 返回：
@@ -306,7 +305,7 @@ public interface SunmiPrinterService extends IInterface {
      * 18 打印条形码
      * 返回：
      */
-    public void printBarCodeCallBack(int anInt, String data, InnerResultCallback callback) throws RemoteException;
+    public void printBarCodeCallBack(int anInt, String data, ICallback callback) throws RemoteException;
     /**
      * 打印条形码
      * 返回：
@@ -316,7 +315,7 @@ public interface SunmiPrinterService extends IInterface {
      * 19 打印条形码,对齐方式
      * 返回：
      */
-    public void printBarCodeWithAlignCallBack(int anInt, String data, int alignments, InnerResultCallback callback) throws RemoteException;
+    public void printBarCodeWithAlignCallBack(int anInt, String data, int alignments, ICallback callback) throws RemoteException;
     /**
      * 打印条形码,对齐方式
      * 返回：
@@ -326,7 +325,7 @@ public interface SunmiPrinterService extends IInterface {
      * 20 设置二维码的大小
      * 返回：
      */
-    public void setQrCodeSizeCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setQrCodeSizeCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置二维码的大小
      * 返回：
@@ -336,7 +335,7 @@ public interface SunmiPrinterService extends IInterface {
      * 21 设置二维码错误更正
      * 返回：
      */
-    public void setQrCodeErrorCorrectionLevCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setQrCodeErrorCorrectionLevCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置二维码错误更正
      * 返回：
@@ -346,7 +345,7 @@ public interface SunmiPrinterService extends IInterface {
      22 设置条形码和二维码的左边距
      * 返回：
      */
-    public void setLeftMarginCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setLeftMarginCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设置条形码和二维码的左边距
      * 返回：
@@ -356,7 +355,7 @@ public interface SunmiPrinterService extends IInterface {
      23 打印机二维码
      * 返回：
      */
-    public void printQrCodeCallBack(String data, InnerResultCallback callback) throws RemoteException;
+    public void printQrCodeCallBack(String data, ICallback callback) throws RemoteException;
     /**
      *打印机二维码
      * 返回：
@@ -366,7 +365,7 @@ public interface SunmiPrinterService extends IInterface {
      24 打印机二维码,对齐方式
      * 返回：
      */
-    public void printQrCodeWithAlignCallBack(String data, int alignments, InnerResultCallback callback) throws RemoteException;
+    public void printQrCodeWithAlignCallBack(String data, int alignments, ICallback callback) throws RemoteException;
     /**
      *打印机二维码,对齐方式
      * 返回：
@@ -376,7 +375,7 @@ public interface SunmiPrinterService extends IInterface {
      25 设定纸张规格
      * 返回：
      */
-    public void setPageFormatCallBack(int anInt, InnerResultCallback callback) throws RemoteException;
+    public void setPageFormatCallBack(int anInt, ICallback callback) throws RemoteException;
     /**
      * 设定纸张规格
      * 返回：
@@ -386,7 +385,7 @@ public interface SunmiPrinterService extends IInterface {
      26 打印机图片
      * 返回：
      */
-    public void printSingleBitmapCallBack(Bitmap bitmap, InnerResultCallback callback) throws RemoteException;
+    public void printSingleBitmapCallBack(Bitmap bitmap, ICallback callback) throws RemoteException;
     /**
      *打印机图片
      * 返回：
@@ -396,7 +395,7 @@ public interface SunmiPrinterService extends IInterface {
      27 打印机图片,对齐方式
      * 返回：
      */
-    public void printSingleBitmapWithAlignCallBack(Bitmap bitmap, int alignments, InnerResultCallback callback) throws RemoteException;
+    public void printSingleBitmapWithAlignCallBack(Bitmap bitmap, int alignments, ICallback callback) throws RemoteException;
     /**
      *打印机图片
      * 返回：
@@ -406,7 +405,7 @@ public interface SunmiPrinterService extends IInterface {
      28 打印多个位图
      * 返回：
      */
-    public void printMultiBitmapCallBack(List<Bitmap> bitmaps, InnerResultCallback callback) throws RemoteException;
+    public void printMultiBitmapCallBack(List<Bitmap> bitmaps, ICallback callback) throws RemoteException;
     /**
      *打印多个位图
      * 返回：
@@ -416,7 +415,7 @@ public interface SunmiPrinterService extends IInterface {
      29 打印多个位图
      * 返回：
      */
-    public void printMultiBitmapWithAlignCallBack(List<Bitmap> bitmaps, int alignments, InnerResultCallback callback) throws RemoteException;
+    public void printMultiBitmapWithAlignCallBack(List<Bitmap> bitmaps, int alignments, ICallback callback) throws RemoteException;
     /**
      *打印多个位图
      * 返回：
@@ -426,7 +425,7 @@ public interface SunmiPrinterService extends IInterface {
      30 重置连接
      * 返回：
      */
-    public void resetDeviceCallBack(InnerResultCallback callback) throws RemoteException;
+    public void resetDeviceCallBack(ICallback callback) throws RemoteException;
     /**
      *重置连接
      * 返回：
@@ -436,7 +435,7 @@ public interface SunmiPrinterService extends IInterface {
      31 全切 切纸
      * 返回：
      */
-    public void fullCutCallBack(InnerResultCallback callback) throws RemoteException;
+    public void fullCutCallBack(ICallback callback) throws RemoteException;
     /**
      *全切 切纸
      * 返回：
@@ -446,7 +445,7 @@ public interface SunmiPrinterService extends IInterface {
      32  发送指令
      * 返回：
      */
-    public void sendRAWDataCallBack(int[] ints, InnerResultCallback callback) throws RemoteException;
+    public void sendRAWDataCallBack(int[] ints, ICallback callback) throws RemoteException;
     /**
      *全切 切纸
      * 返回：
@@ -456,7 +455,7 @@ public interface SunmiPrinterService extends IInterface {
      33  发送指令
      * 返回：
      */
-    public void sendRAWDataStringCallBack(String hex, InnerResultCallback callback) throws RemoteException;
+    public void sendRAWDataStringCallBack(String hex, ICallback callback) throws RemoteException;
     /**
      *全切 切纸
      * 返回：
@@ -466,7 +465,7 @@ public interface SunmiPrinterService extends IInterface {
      34  发送指令
      * 返回：
      */
-    public void sendRAWDataByteCallBack(byte[] bytes, InnerResultCallback callback) throws RemoteException;
+    public void sendRAWDataByteCallBack(byte[] bytes, ICallback callback) throws RemoteException;
     /**
      *全切 切纸
      * 返回：
@@ -476,7 +475,7 @@ public interface SunmiPrinterService extends IInterface {
      35  设置打印文字是否 下划线
      * 返回：
      */
-    public void setUnderlineCallBack(boolean haveUnderline, InnerResultCallback callback) throws RemoteException;
+    public void setUnderlineCallBack(boolean haveUnderline, ICallback callback) throws RemoteException;
     /**
      *全切 切纸
      * 返回：
@@ -486,7 +485,7 @@ public interface SunmiPrinterService extends IInterface {
      35  设置打印文字是否 加粗
      * 返回：
      */
-    public void sethaveBoldCallBack(boolean haveBold, InnerResultCallback callback) throws RemoteException;
+    public void sethaveBoldCallBack(boolean haveBold, ICallback callback) throws RemoteException;
     /**
      *全切 切纸
      * 返回：
@@ -496,7 +495,7 @@ public interface SunmiPrinterService extends IInterface {
      36  设置打印文字 行高
      * 返回：
      */
-    public void setHaveLineHeightCallBack(float lineHeightRatio, InnerResultCallback callback) throws RemoteException;
+    public void setHaveLineHeightCallBack(float lineHeightRatio, ICallback callback) throws RemoteException;
     /**
      *全切 切纸
      * 返回：
@@ -506,7 +505,7 @@ public interface SunmiPrinterService extends IInterface {
      37  发送指令
      * 返回：
      */
-    public void printerByteWithByteCallBack(byte[] bytes, InnerResultCallback callback) throws RemoteException;
+    public void printerByteWithByteCallBack(byte[] bytes, ICallback callback) throws RemoteException;
     /**
      *全切 切纸
      * 返回：
@@ -516,7 +515,7 @@ public interface SunmiPrinterService extends IInterface {
      37  发送指令
      * 返回：
      */
-    public void printerByteCallBack(InnerResultCallback callback) throws RemoteException;
+    public void printerByteCallBack(ICallback callback) throws RemoteException;
     /**
      *全切 切纸
      * 返回：
@@ -526,7 +525,7 @@ public interface SunmiPrinterService extends IInterface {
      38  双qr大小
      * 返回：
      */
-    public void setDoubleQRSizeCallBack(int size, InnerResultCallback callback) throws RemoteException;
+    public void setDoubleQRSizeCallBack(int size, ICallback callback) throws RemoteException;
     /**
      * 双qr大小
      * 返回：
@@ -536,7 +535,7 @@ public interface SunmiPrinterService extends IInterface {
      39  双qr 左边边距
      * 返回：
      */
-    public void setDoubleQR1MarginLeftCallBack(int left, InnerResultCallback callback) throws RemoteException;
+    public void setDoubleQR1MarginLeftCallBack(int left, ICallback callback) throws RemoteException;
     /**
      *双qr 左边边距
      * 返回：
@@ -546,7 +545,7 @@ public interface SunmiPrinterService extends IInterface {
      40  双qr 左边边距
      * 返回：
      */
-    public void setDoubleQR2MarginLeftCallBack(int left, InnerResultCallback callback) throws RemoteException;
+    public void setDoubleQR2MarginLeftCallBack(int left, ICallback callback) throws RemoteException;
     /**
      *双qr 左边边距
      * 返回：
@@ -556,7 +555,7 @@ public interface SunmiPrinterService extends IInterface {
      41  双qr 误差
      * 返回：
      */
-    public void setDoubleQR1LevelCallBack(int level, InnerResultCallback callback) throws RemoteException;
+    public void setDoubleQR1LevelCallBack(int level, ICallback callback) throws RemoteException;
     /**
      * 双qr 误差
      * 返回：
@@ -566,7 +565,7 @@ public interface SunmiPrinterService extends IInterface {
      42  双qr 误差
      * 返回：
      */
-    public void setDoubleQR2LevelCallBack(int level, InnerResultCallback callback) throws RemoteException;
+    public void setDoubleQR2LevelCallBack(int level, ICallback callback) throws RemoteException;
     /**
      * 双qr 误差
      * 返回：
@@ -576,7 +575,7 @@ public interface SunmiPrinterService extends IInterface {
      43  双qr 版本
      * 返回：
      */
-    public void setDoubleQR1VersionCallBack(int version, InnerResultCallback callback) throws RemoteException;
+    public void setDoubleQR1VersionCallBack(int version, ICallback callback) throws RemoteException;
     /**
      * 双qr 版本
      * 返回：
@@ -586,7 +585,7 @@ public interface SunmiPrinterService extends IInterface {
      44  双qr 版本
      * 返回：
      */
-    public void setDoubleQR2VersionCallBack(int version, InnerResultCallback callback) throws RemoteException;
+    public void setDoubleQR2VersionCallBack(int version, ICallback callback) throws RemoteException;
     /**
      * 双qr 版本
      * 返回：
@@ -596,7 +595,7 @@ public interface SunmiPrinterService extends IInterface {
      45 打印双QR
      * 返回：
      */
-    public void printDoubleQRCallBack(String qr1,String qr2, InnerResultCallback callback) throws RemoteException;
+    public void printDoubleQRCallBack(String qr1,String qr2, ICallback callback) throws RemoteException;
     /**
      * 打印双QR
      * 返回：
@@ -606,7 +605,7 @@ public interface SunmiPrinterService extends IInterface {
      46 初始化参数
      * 返回：
      */
-    public void initParamsCallBack(InnerResultCallback callback) throws RemoteException;
+    public void initParamsCallBack(ICallback callback) throws RemoteException;
     /**
      * 初始化参数
      * 返回：
@@ -616,7 +615,7 @@ public interface SunmiPrinterService extends IInterface {
      47 初始化参数
      * 返回：
      */
-    public void initParamsIsClearCallBack(boolean isClearCache, InnerResultCallback callback) throws RemoteException;
+    public void initParamsIsClearCallBack(boolean isClearCache, ICallback callback) throws RemoteException;
     /**
      * 初始化参数
      * 返回：
@@ -626,30 +625,30 @@ public interface SunmiPrinterService extends IInterface {
      * 48 获取全局⾏⾼设定值
      * 返回：
      */
-    public int getForcedRowHeightCallBack(InnerResultCallback callback) throws RemoteException;
+    public int getForcedRowHeightCallBack(ICallback callback) throws RemoteException;
 
     /**
      * 49 获取全局字体加粗样式使能
      * 返回：
      */
-    public boolean isForcedBoldCallBack(InnerResultCallback callback) throws RemoteException;
+    public boolean isForcedBoldCallBack(ICallback callback) throws RemoteException;
 
     /**
      * 50 获取全局字体下划线样式使能
      * 返回：
      */
-    public boolean isForcedUnderlineCallBack(InnerResultCallback callback) throws RemoteException;
+    public boolean isForcedUnderlineCallBack(ICallback callback) throws RemoteException;
 
     /**
      * 51 获取打印浓度
      * 返回：
      */
-    public int getPrinterDensityCallBack(InnerResultCallback callback) throws RemoteException;
+    public int getPrinterDensityCallBack(ICallback callback) throws RemoteException;
     /**
      *  52蓝牙打印初始化
      *
      */
-    public void initBluePrinterCallBack(int anInt, BluetoothDevice device, InnerResultCallback callback) throws RemoteException;
+    public void initBluePrinterCallBack(int anInt, BluetoothDevice device, ICallback callback) throws RemoteException;
     /**
      * 53 蓝牙打印初始化
      *
@@ -862,7 +861,7 @@ public interface SunmiPrinterService extends IInterface {
 //            int _arg1;
 //            int _arg2;
 //            int _arg3;
-//            InnerResultCallback _arg0;
+//            ICallback _arg0;
 //            String _arg0;
 //            String[] _arg0;
 //            int[] _arg1;
@@ -871,8 +870,8 @@ public interface SunmiPrinterService extends IInterface {
 //            InnerLcdCallback _arg2;
 //            InnerLcdCallback _arg1;
 //            int[] _arg2;
-//            InnerResultCallback _arg3;
-//            InnerResultCallback _arg1;
+//            ICallback _arg3;
+//            ICallback _arg1;
 //            Bitmap _arg0;
 //            byte[] _arg0;
             switch (code) {
@@ -900,7 +899,7 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_printerInit:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printerInit(_arg0);
                     reply.writeNoException();
                     return true;
@@ -908,7 +907,7 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_printerSelfChecking:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printerSelfChecking(_arg0);
                     reply.writeNoException();
                     return true;
@@ -940,7 +939,7 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_getPrintedLength:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.getPrintedLength(_arg0);
                     int _result = 0;
                     reply.writeNoException();
@@ -952,7 +951,7 @@ public interface SunmiPrinterService extends IInterface {
                 {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0 = data.readInt();
-                    InnerResultCallback _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.lineWrap(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -960,8 +959,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_sendRAWData:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    byte[] _arg0 = data.createByteArray();
-                    InnerResultCallback _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    int[] _arg0 = data.createIntArray();
+                    ICallback _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.sendRAWData(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -970,7 +969,7 @@ public interface SunmiPrinterService extends IInterface {
                 {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0 = data.readInt();
-                    InnerResultCallback _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setAlignment(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -979,7 +978,7 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_setFontName:{
                     data.enforceInterface(DESCRIPTOR);
                     String _arg0 = data.readString();
-                    InnerResultCallback _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setFontName(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -989,7 +988,7 @@ public interface SunmiPrinterService extends IInterface {
                 {
                     data.enforceInterface(DESCRIPTOR);
                     float _arg0 = data.readFloat();
-                    InnerResultCallback _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setFontSize(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -998,7 +997,7 @@ public interface SunmiPrinterService extends IInterface {
                 {
                     data.enforceInterface(DESCRIPTOR);
                     String _arg0 = data.readString();
-                    InnerResultCallback _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printText(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1009,7 +1008,7 @@ public interface SunmiPrinterService extends IInterface {
                     String _arg0 = data.readString();
                     String _arg1 = data.readString();
                     float _arg2 = data.readFloat();
-                    InnerResultCallback _arg3 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg3 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printTextWithFont(_arg0, _arg1, _arg2, _arg3);
                     reply.writeNoException();
                     return true;
@@ -1020,7 +1019,7 @@ public interface SunmiPrinterService extends IInterface {
                     String[] _arg0 = data.createStringArray();
                     int[] _arg1 = data.createIntArray();
                     int[] _arg2 = data.createIntArray();
-                    InnerResultCallback _arg3 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg3 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printColumnsText(_arg0, _arg1, _arg2, _arg3);
                     reply.writeNoException();
                     return true;
@@ -1035,7 +1034,7 @@ public interface SunmiPrinterService extends IInterface {
                         _arg0 = null;
                     }
 
-                    InnerResultCallback _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printBitmap(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1048,7 +1047,7 @@ public interface SunmiPrinterService extends IInterface {
                     int _arg2 = data.readInt();
                     int _arg3 = data.readInt();
                     int _arg4 = data.readInt();
-                    InnerResultCallback _arg5 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg5 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printBarCode(_arg0, _arg1, _arg2, _arg3, _arg4, _arg5);
                     reply.writeNoException();
                     return true;
@@ -1068,7 +1067,7 @@ public interface SunmiPrinterService extends IInterface {
                     String _arg0 = data.readString();
                     int _arg1 = data.readInt();
                     int _arg2 = data.readInt();
-                    InnerResultCallback _arg3 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg3 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printQRCode(_arg0, _arg1, _arg2, _arg3);
                     reply.writeNoException();
                     return true;
@@ -1077,7 +1076,7 @@ public interface SunmiPrinterService extends IInterface {
                 {
                     data.enforceInterface(DESCRIPTOR);
                     String _arg0 = data.readString();
-                    InnerResultCallback _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printOriginalText(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1086,7 +1085,7 @@ public interface SunmiPrinterService extends IInterface {
                 {
                     data.enforceInterface(DESCRIPTOR);
                     TransBean[] _arg0 = (TransBean[]) data.createTypedArray(TransBean.CREATOR);
-                    InnerResultCallback _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.commitPrint(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1124,7 +1123,7 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_getPrinterFactory:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.getPrinterFactory(_arg0);
                     reply.writeNoException();
                     return true;
@@ -1137,7 +1136,7 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_commitPrinterBufferWithCallback:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.commitPrinterBufferWithCallback(_arg0);
                     reply.writeNoException();
                     return true;
@@ -1146,7 +1145,7 @@ public interface SunmiPrinterService extends IInterface {
                 {
                     data.enforceInterface(DESCRIPTOR);
                     boolean _result = 0 != data.readInt();
-                    InnerResultCallback _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.exitPrinterBufferWithCallback(_result, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1157,7 +1156,7 @@ public interface SunmiPrinterService extends IInterface {
                     String[] _arg0 = data.createStringArray();
                     int[] _arg1 = data.createIntArray();
                     int[] _arg2 = data.createIntArray();
-                    InnerResultCallback _arg3 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg3 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printColumnsString(_arg0, _arg1, _arg2, _arg3);
                     reply.writeNoException();
                     return true;
@@ -1173,7 +1172,7 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_cutPaper:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.cutPaper(_arg0);
                     reply.writeNoException();
                     return true;
@@ -1189,7 +1188,7 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_openDrawer:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.openDrawer(_arg0);
                     reply.writeNoException();
                     return true;
@@ -1261,7 +1260,7 @@ public interface SunmiPrinterService extends IInterface {
                     }
 
                     int _arg1 = data.readInt();
-                    InnerResultCallback _arg2 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printBitmapCustom(_arg0, _arg1, _arg2);
                     reply.writeNoException();
                     return true;
@@ -1376,7 +1375,7 @@ public interface SunmiPrinterService extends IInterface {
                     int _arg1 = data.readInt();
                     int _arg2 = data.readInt();
                     int _arg3 = data.readInt();
-                    InnerResultCallback _arg4 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg4 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.print2DCode(_arg0, _arg1, _arg2, _arg3, _arg4);
                     reply.writeNoException();
                     return true;
@@ -1384,7 +1383,7 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_autoOutPaper:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.autoOutPaper(_arg0);
                     reply.writeNoException();
                     return true;
@@ -1418,8 +1417,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.initPrinterCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1438,8 +1437,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     int _result = this.getPrinterStatusCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     reply.writeInt(_result);
@@ -1465,8 +1464,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_printAndLineFeedCallBack:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0;
-                    _arg0 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0;
+                    _arg0 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printAndLineFeedCallBack(_arg0);
                     reply.writeNoException();
                     return true;
@@ -1476,8 +1475,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printAndFeedPaperCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1501,8 +1500,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_partialCutCallBack:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0;
-                    _arg0 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0;
+                    _arg0 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.partialCutCallBack(_arg0);
                     reply.writeNoException();
                     return true;
@@ -1512,8 +1511,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setAlignmentCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1524,8 +1523,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setTextSizeCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1544,8 +1543,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setTextTypefaceCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1564,8 +1563,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setTextStyleCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1584,8 +1583,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setTextLineSpacingCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1604,8 +1603,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setTextWidthCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1624,8 +1623,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     String _arg0;
                     _arg0 = data.readString();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printTextCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1638,8 +1637,8 @@ public interface SunmiPrinterService extends IInterface {
                     _arg0 = data.readString();
                     int _arg1;
                     _arg1 = data.readInt();
-                    InnerResultCallback _arg2;
-                    _arg2 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2;
+                    _arg2 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printTextWithAliCallBack(_arg0, _arg1, _arg2);
                     reply.writeNoException();
                     return true;
@@ -1666,8 +1665,8 @@ public interface SunmiPrinterService extends IInterface {
                     _arg2 = data.createIntArray();
                     int[] _arg3;
                     _arg3 = data.createIntArray();
-                    InnerResultCallback _arg4;
-                    _arg4 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg4;
+                    _arg4 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printColumnsTextCallBack(_arg0, _arg1, _arg2, _arg3,_arg4);
                     reply.writeNoException();
                     return true;
@@ -1693,8 +1692,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setBarCodeWidthCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1713,8 +1712,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setBarCodeHeightCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1733,8 +1732,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setBarCodeContentPrintPosCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1755,8 +1754,8 @@ public interface SunmiPrinterService extends IInterface {
                     _arg0 = data.readInt();
                     String _arg1;
                     _arg1 = data.readString();
-                    InnerResultCallback _arg2;
-                    _arg2 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2;
+                    _arg2 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printBarCodeCallBack(_arg0, _arg1, _arg2);
                     reply.writeNoException();
                     return true;
@@ -1771,8 +1770,8 @@ public interface SunmiPrinterService extends IInterface {
                     _arg1 = data.readString();
                     int _arg2;
                     _arg2 = data.readInt();
-                    InnerResultCallback _arg3;
-                    _arg3 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg3;
+                    _arg3 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printBarCodeWithAlignCallBack(_arg0, _arg1, _arg2, _arg3);
                     reply.writeNoException();
                     return true;
@@ -1795,8 +1794,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setQrCodeSizeCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1815,8 +1814,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setQrCodeErrorCorrectionLevCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1835,8 +1834,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setLeftMarginCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1855,8 +1854,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     String _arg0;
                     _arg0 = data.readString();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printQrCodeCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1877,8 +1876,8 @@ public interface SunmiPrinterService extends IInterface {
                     _arg0 = data.readString();
                     int _arg1;
                     _arg1 = data.readInt();
-                    InnerResultCallback _arg2;
-                    _arg2 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2;
+                    _arg2 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printQrCodeWithAlignCallBack(_arg0, _arg1, _arg2);
                     reply.writeNoException();
                     return true;
@@ -1899,8 +1898,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setPageFormatCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1924,8 +1923,8 @@ public interface SunmiPrinterService extends IInterface {
                     else {
                         _arg0 = null;
                     }
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printSingleBitmapCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -1956,8 +1955,8 @@ public interface SunmiPrinterService extends IInterface {
                     }
                     int _arg1;
                     _arg1 = data.readInt();
-                    InnerResultCallback _arg2;
-                    _arg2 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2;
+                    _arg2 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printSingleBitmapWithAlignCallBack(_arg0, _arg1, _arg2);
                     reply.writeNoException();
                     return true;
@@ -1983,8 +1982,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     List<Bitmap> _arg0;
                     _arg0 = data.createTypedArrayList(Bitmap.CREATOR);
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printMultiBitmapCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2005,8 +2004,8 @@ public interface SunmiPrinterService extends IInterface {
                     _arg0 = data.createTypedArrayList(Bitmap.CREATOR);
                     int _arg1;
                     _arg1 = data.readInt();
-                    InnerResultCallback _arg2;
-                    _arg2 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2;
+                    _arg2 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printMultiBitmapWithAlignCallBack(_arg0, _arg1, _arg2);
                     reply.writeNoException();
                     return true;
@@ -2025,8 +2024,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_resetDeviceCallBack:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0;
-                    _arg0 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0;
+                    _arg0 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.resetDeviceCallBack(_arg0);
                     reply.writeNoException();
                     return true;
@@ -2041,8 +2040,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_fullCutCallBack:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0;
-                    _arg0 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0;
+                    _arg0 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.fullCutCallBack(_arg0);
                     reply.writeNoException();
                     return true;
@@ -2059,8 +2058,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int[] _arg0;
                     _arg0 = data.createIntArray();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.sendRAWDataCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2071,8 +2070,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     String _arg0;
                     _arg0 = data.readString();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.sendRAWDataStringCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2091,8 +2090,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     byte[] _arg0;
                     _arg0 = data.createByteArray();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.sendRAWDataByteCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2111,8 +2110,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     boolean _arg0;
                     _arg0 = (0!=data.readInt());
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setUnderlineCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2131,8 +2130,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     boolean _arg0;
                     _arg0 = (0!=data.readInt());
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback) ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback) ICallback.Stub.asInterface(data.readStrongBinder());
                     this.sethaveBoldCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2151,8 +2150,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     float _arg0;
                     _arg0 = data.readFloat();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setHaveLineHeightCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2171,8 +2170,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     byte[] _arg0;
                     _arg0 = data.createByteArray();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printerByteWithByteCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2189,8 +2188,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_printerByteCallBack:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0;
-                    _arg0 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0;
+                    _arg0 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printerByteCallBack(_arg0);
                     reply.writeNoException();
                     return true;
@@ -2207,8 +2206,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setDoubleQRSizeCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2227,8 +2226,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setDoubleQR1MarginLeftCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2247,8 +2246,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setDoubleQR2MarginLeftCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2267,8 +2266,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setDoubleQR1LevelCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2287,8 +2286,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setDoubleQR2LevelCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2307,8 +2306,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setDoubleQR1VersionCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2327,8 +2326,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     int _arg0;
                     _arg0 = data.readInt();
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setDoubleQR2VersionCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2348,8 +2347,8 @@ public interface SunmiPrinterService extends IInterface {
                     String _arg0;
                     _arg0 = data.readString();
                     String _arg1 = data.readString();
-                    InnerResultCallback _arg2;
-                    _arg2 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2;
+                    _arg2 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printDoubleQRCallBack(_arg0, _arg1,_arg2);
                     reply.writeNoException();
                     return true;
@@ -2367,8 +2366,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_initParamsCallBack:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0;
-                    _arg0 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0;
+                    _arg0 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.initParamsCallBack(_arg0);
                     reply.writeNoException();
                     return true;
@@ -2385,8 +2384,8 @@ public interface SunmiPrinterService extends IInterface {
                     data.enforceInterface(DESCRIPTOR);
                     boolean _arg0;
                     _arg0 = (0!=data.readInt());
-                    InnerResultCallback _arg1;
-                    _arg1 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg1;
+                    _arg1 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.initParamsIsClearCallBack(_arg0, _arg1);
                     reply.writeNoException();
                     return true;
@@ -2403,8 +2402,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_getForcedRowHeightCallBack:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0;
-                    _arg0 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0;
+                    _arg0 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     int _result = this.getForcedRowHeightCallBack(_arg0);
                     reply.writeNoException();
                     reply.writeInt(_result);
@@ -2413,8 +2412,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_isForcedBoldCallBack:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0;
-                    _arg0 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0;
+                    _arg0 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     boolean _result = this.isForcedBoldCallBack(_arg0);
                     reply.writeNoException();
                     reply.writeInt(((_result)?(1):(0)));
@@ -2423,8 +2422,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_isForcedUnderlineCallBack:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0;
-                    _arg0 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0;
+                    _arg0 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     boolean _result = this.isForcedUnderlineCallBack(_arg0);
                     reply.writeNoException();
                     reply.writeInt(((_result)?(1):(0)));
@@ -2433,8 +2432,8 @@ public interface SunmiPrinterService extends IInterface {
                 case TRANSACTION_getPrinterDensityCallBack:
                 {
                     data.enforceInterface(DESCRIPTOR);
-                    InnerResultCallback _arg0;
-                    _arg0 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg0;
+                    _arg0 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     int _result = this.getPrinterDensityCallBack(_arg0);
                     reply.writeNoException();
                     reply.writeInt(_result);
@@ -2452,8 +2451,8 @@ public interface SunmiPrinterService extends IInterface {
                     else {
                         _arg1 = null;
                     }
-                    InnerResultCallback _arg2;
-                    _arg2 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2;
+                    _arg2 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.initBluePrinterCallBack(_arg0, _arg1, _arg2);
                     reply.writeNoException();
                     return true;
@@ -2485,8 +2484,8 @@ public interface SunmiPrinterService extends IInterface {
                     else {
                         _arg1 = null;
                     }
-                    InnerResultCallback _arg2;
-                    _arg2 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2;
+                    _arg2 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printBMPBitmapCallBack(_arg1, _arg2);
                     reply.writeNoException();
                     return true;
@@ -2511,8 +2510,8 @@ public interface SunmiPrinterService extends IInterface {
                     int _arg0;
                     _arg0 = data.readInt();
 
-                    InnerResultCallback _arg2;
-                    _arg2 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2;
+                    _arg2 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.printNvBitmapCallBack(_arg0,_arg2);
                     reply.writeNoException();
                     return true;
@@ -2533,8 +2532,8 @@ public interface SunmiPrinterService extends IInterface {
                     String _arg0;
                     _arg0 = data.readString();
 
-                    InnerResultCallback _arg2;
-                    _arg2 = (InnerResultCallback)ICallback.Stub.asInterface(data.readStrongBinder());
+                    ICallback _arg2;
+                    _arg2 = (ICallback)ICallback.Stub.asInterface(data.readStrongBinder());
                     this.setDownloadNvBmpCallBack(_arg0,_arg2);
                     reply.writeNoException();
                     return true;
@@ -2654,7 +2653,7 @@ public interface SunmiPrinterService extends IInterface {
                 return _result;
             }
 
-            public void printerInit(InnerResultCallback callback) throws RemoteException {
+            public void printerInit(ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2670,7 +2669,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void printerSelfChecking(InnerResultCallback callback) throws RemoteException {
+            public void printerSelfChecking(ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2740,7 +2739,7 @@ public interface SunmiPrinterService extends IInterface {
                 return _result;
             }
 
-            public void getPrintedLength(InnerResultCallback callback) throws RemoteException {
+            public void getPrintedLength(ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2762,7 +2761,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void lineWrap(int n, InnerResultCallback callback) throws RemoteException {
+            public void lineWrap(int n, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2779,13 +2778,13 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void sendRAWData(byte[] data, InnerResultCallback callback) throws RemoteException {
+            public void sendRAWData(int[] data, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
                 try {
                     _data.writeInterfaceToken(DESCRIPTOR);
-                    _data.writeByteArray(data);
+                    _data.writeIntArray(data);
                     _data.writeStrongBinder(callback != null ? callback.asBinder() : null);
                     this.mRemote.transact(11, _data, _reply, 0);
                     _reply.readException();
@@ -2796,7 +2795,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void setAlignment(int alignment, InnerResultCallback callback) throws RemoteException {
+            public void setAlignment(int alignment, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2813,7 +2812,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void setFontName(String typeface, InnerResultCallback callback) throws RemoteException {
+            public void setFontName(String typeface, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2830,7 +2829,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void setFontSize(float fontsize, InnerResultCallback callback) throws RemoteException {
+            public void setFontSize(float fontsize, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2847,7 +2846,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void printText(String text, InnerResultCallback callback) throws RemoteException {
+            public void printText(String text, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2864,7 +2863,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void printTextWithFont(String text, String typeface, float fontsize, InnerResultCallback callback) throws RemoteException {
+            public void printTextWithFont(String text, String typeface, float fontsize, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2883,7 +2882,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, InnerResultCallback callback) throws RemoteException {
+            public void printColumnsText(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2902,7 +2901,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void printBitmap(Bitmap bitmap, InnerResultCallback callback) throws RemoteException {
+            public void printBitmap(Bitmap bitmap, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2925,7 +2924,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void printBarCode(String data, int symbology, int height, int width, int textposition, InnerResultCallback callback) throws RemoteException {
+            public void printBarCode(String data, int symbology, int height, int width, int textposition, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2946,7 +2945,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void printQRCode(String data, int modulesize, int errorlevel, InnerResultCallback callback) throws RemoteException {
+            public void printQRCode(String data, int modulesize, int errorlevel, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2965,7 +2964,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void printOriginalText(String text, InnerResultCallback callback) throws RemoteException {
+            public void printOriginalText(String text, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -2982,7 +2981,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void commitPrint(TransBean[] transbean, InnerResultCallback callback) throws RemoteException {
+            public void commitPrint(TransBean[] transbean, ICallback callback) throws RemoteException {
                 if (this.transaction_table[19] == TRANSACTION_STOP) {
                     throw new InnerPrinterException("this model does not support this method!");
                 } else {
@@ -3026,7 +3025,7 @@ public interface SunmiPrinterService extends IInterface {
 
             }
 
-            public void cutPaper(InnerResultCallback callback) throws RemoteException {
+            public void cutPaper(ICallback callback) throws RemoteException {
                 if (this.transaction_table[10] == TRANSACTION_STOP) {
                     throw new InnerPrinterException("this model does not support this method!");
                 } else {
@@ -3076,7 +3075,7 @@ public interface SunmiPrinterService extends IInterface {
                 }
             }
 
-            public void openDrawer(InnerResultCallback callback) throws RemoteException {
+            public void openDrawer(ICallback callback) throws RemoteException {
                 if (this.transaction_table[12] == TRANSACTION_STOP) {
                     throw new InnerPrinterException("this model does not support this method!");
                 } else {
@@ -3191,7 +3190,7 @@ public interface SunmiPrinterService extends IInterface {
                 }
             }
 
-            public void getPrinterFactory(InnerResultCallback callback) throws RemoteException {
+            public void getPrinterFactory(ICallback callback) throws RemoteException {
                 if (this.transaction_table[4] == TRANSACTION_STOP) {
                     throw new InnerPrinterException("this model does not support this method!");
                 } else {
@@ -3238,7 +3237,7 @@ public interface SunmiPrinterService extends IInterface {
                 }
             }
 
-            public void commitPrinterBufferWithCallback(InnerResultCallback callback) throws RemoteException {
+            public void commitPrinterBufferWithCallback(ICallback callback) throws RemoteException {
                 if (this.transaction_table[6] == TRANSACTION_STOP) {
                     throw new InnerPrinterException("this model does not support this method!");
                 } else {
@@ -3262,7 +3261,7 @@ public interface SunmiPrinterService extends IInterface {
                 }
             }
 
-            public void exitPrinterBufferWithCallback(boolean commit, InnerResultCallback callback) throws RemoteException {
+            public void exitPrinterBufferWithCallback(boolean commit, ICallback callback) throws RemoteException {
                 if (this.transaction_table[6] == TRANSACTION_STOP) {
                     throw new InnerPrinterException("this model does not support this method!");
                 } else {
@@ -3287,7 +3286,7 @@ public interface SunmiPrinterService extends IInterface {
                 }
             }
 
-            public void printColumnsString(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, InnerResultCallback callback) throws RemoteException {
+            public void printColumnsString(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign, ICallback callback) throws RemoteException {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
 
@@ -3468,7 +3467,7 @@ public interface SunmiPrinterService extends IInterface {
                 }
             }
 
-            public void printBitmapCustom(Bitmap bitmap, int type, InnerResultCallback callback) throws RemoteException {
+            public void printBitmapCustom(Bitmap bitmap, int type, ICallback callback) throws RemoteException {
                 if (this.transaction_table[20] == TRANSACTION_STOP) {
                     throw new InnerPrinterException("this model does not support this method!");
                 } else {
@@ -3813,7 +3812,7 @@ public interface SunmiPrinterService extends IInterface {
                 }
             }
 
-            public void print2DCode(String data, int symbology, int modulesize, int errorlevel, InnerResultCallback callback) throws RemoteException {
+            public void print2DCode(String data, int symbology, int modulesize, int errorlevel, ICallback callback) throws RemoteException {
                 if (this.transaction_table[33] == TRANSACTION_STOP) {
                     throw new InnerPrinterException("this model does not support this method!");
                 } else {
@@ -3841,7 +3840,7 @@ public interface SunmiPrinterService extends IInterface {
                 }
             }
 
-            public void autoOutPaper(InnerResultCallback callback) throws RemoteException {
+            public void autoOutPaper(ICallback callback) throws RemoteException {
                 if (this.transaction_table[34] == TRANSACTION_STOP) {
                     throw new InnerPrinterException("this model does not support this method!");
                 } else {
@@ -3939,7 +3938,7 @@ public interface SunmiPrinterService extends IInterface {
             /**
              * 1 初始化打印机
              */
-            @Override public void initPrinterCallBack(int anInt,InnerResultCallback callback) throws RemoteException
+            @Override public void initPrinterCallBack(int anInt,ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -3981,7 +3980,7 @@ public interface SunmiPrinterService extends IInterface {
              * 2 获取打印机状态
              * 返回：
              */
-            @Override public int getPrinterStatusCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public int getPrinterStatusCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4053,7 +4052,7 @@ public interface SunmiPrinterService extends IInterface {
              * 走纸
              * 返回：
              */
-            @Override public void printAndLineFeedCallBack(InnerResultCallback callback) throws RemoteException
+            @Override public void printAndLineFeedCallBack(ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4075,7 +4074,7 @@ public interface SunmiPrinterService extends IInterface {
              * 4 走纸 指定高度
              * 返回：
              */
-            @Override public void printAndFeedPaperCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void printAndFeedPaperCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4141,7 +4140,7 @@ public interface SunmiPrinterService extends IInterface {
              * 切纸
              * 返回：
              */
-            @Override public void partialCutCallBack(InnerResultCallback callback) throws RemoteException
+            @Override public void partialCutCallBack(ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4163,7 +4162,7 @@ public interface SunmiPrinterService extends IInterface {
              * 6 设置文本对齐方式
              * 返回：
              */
-            @Override public void setAlignmentCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setAlignmentCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4208,7 +4207,7 @@ public interface SunmiPrinterService extends IInterface {
              * 7 设置文本字体大小
              * 返回：
              */
-            @Override public void setTextSizeCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setTextSizeCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4253,7 +4252,7 @@ public interface SunmiPrinterService extends IInterface {
              * 8 设置字体
              * 返回：
              */
-            @Override public void setTextTypefaceCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setTextTypefaceCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4298,7 +4297,7 @@ public interface SunmiPrinterService extends IInterface {
              * 9 设置字体样式
              * 返回：
              */
-            @Override public void setTextStyleCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setTextStyleCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4343,7 +4342,7 @@ public interface SunmiPrinterService extends IInterface {
              * 10 设置行间距
              * 返回：
              */
-            @Override public void setTextLineSpacingCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setTextLineSpacingCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4388,7 +4387,7 @@ public interface SunmiPrinterService extends IInterface {
              * 11 设置打印宽度
              * 返回：
              */
-            @Override public void setTextWidthCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setTextWidthCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4433,7 +4432,7 @@ public interface SunmiPrinterService extends IInterface {
              * 12 打印文本
              * 返回：
              */
-            @Override public void printTextCallBack(String text, InnerResultCallback callback) throws RemoteException
+            @Override public void printTextCallBack(String text, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4478,7 +4477,7 @@ public interface SunmiPrinterService extends IInterface {
              * 13 打印文本,对齐方式
              * 返回：
              */
-            @Override public void printTextWithAliCallBack(String text, int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void printTextWithAliCallBack(String text, int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4528,7 +4527,7 @@ public interface SunmiPrinterService extends IInterface {
              * colsAlign：     各列对齐方式(0居左, 1居中, 2居右)
              * 备注: 三个参数的数组长度应该一致, 如果colsText[i]的宽度大于colsWidth[i], 则文本换行
              */
-            @Override public void printColumnsTextCallBack(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign,int[] size, InnerResultCallback callback) throws RemoteException
+            @Override public void printColumnsTextCallBack(String[] colsTextArr, int[] colsWidthArr, int[] colsAlign,int[] size, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4582,7 +4581,7 @@ public interface SunmiPrinterService extends IInterface {
              * 15 设置条形码宽度
              * 返回：
              */
-            @Override public void setBarCodeWidthCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setBarCodeWidthCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4627,7 +4626,7 @@ public interface SunmiPrinterService extends IInterface {
              * 16 设置条形码的高度
              * 返回：
              */
-            @Override public void setBarCodeHeightCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setBarCodeHeightCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4672,7 +4671,7 @@ public interface SunmiPrinterService extends IInterface {
              * 17 打印条形码时，请选择HRI字符的打印位置
              * 返回：
              */
-            @Override public void setBarCodeContentPrintPosCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setBarCodeContentPrintPosCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4717,7 +4716,7 @@ public interface SunmiPrinterService extends IInterface {
              * 18 打印条形码
              * 返回：
              */
-            @Override public void printBarCodeCallBack(int anInt, String data, InnerResultCallback callback) throws RemoteException
+            @Override public void printBarCodeCallBack(int anInt, String data, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4764,7 +4763,7 @@ public interface SunmiPrinterService extends IInterface {
              * 19 打印条形码,对齐方式
              * 返回：
              */
-            @Override public void printBarCodeWithAlignCallBack(int anInt, String data, int alignments, InnerResultCallback callback) throws RemoteException
+            @Override public void printBarCodeWithAlignCallBack(int anInt, String data, int alignments, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4813,7 +4812,7 @@ public interface SunmiPrinterService extends IInterface {
              * 20 设置二维码的大小
              * 返回：
              */
-            @Override public void setQrCodeSizeCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setQrCodeSizeCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4858,7 +4857,7 @@ public interface SunmiPrinterService extends IInterface {
              * 21 设置二维码错误更正
              * 返回：
              */
-            @Override public void setQrCodeErrorCorrectionLevCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setQrCodeErrorCorrectionLevCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4903,7 +4902,7 @@ public interface SunmiPrinterService extends IInterface {
              22 设置条形码和二维码的左边距
              * 返回：
              */
-            @Override public void setLeftMarginCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setLeftMarginCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4948,7 +4947,7 @@ public interface SunmiPrinterService extends IInterface {
              23 打印机二维码
              * 返回：
              */
-            @Override public void printQrCodeCallBack(String data, InnerResultCallback callback) throws RemoteException
+            @Override public void printQrCodeCallBack(String data, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -4993,7 +4992,7 @@ public interface SunmiPrinterService extends IInterface {
              24 打印机二维码,对齐方式
              * 返回：
              */
-            @Override public void printQrCodeWithAlignCallBack(String data, int alignments, InnerResultCallback callback) throws RemoteException
+            @Override public void printQrCodeWithAlignCallBack(String data, int alignments, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5040,7 +5039,7 @@ public interface SunmiPrinterService extends IInterface {
              25 设定纸张规格
              * 返回：
              */
-            @Override public void setPageFormatCallBack(int anInt, InnerResultCallback callback) throws RemoteException
+            @Override public void setPageFormatCallBack(int anInt, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5085,7 +5084,7 @@ public interface SunmiPrinterService extends IInterface {
              26 打印机图片
              * 返回：
              */
-            @Override public void printSingleBitmapCallBack(Bitmap bitmap, InnerResultCallback callback) throws RemoteException
+            @Override public void printSingleBitmapCallBack(Bitmap bitmap, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5142,7 +5141,7 @@ public interface SunmiPrinterService extends IInterface {
              27 打印机图片,对齐方式
              * 返回：
              */
-            @Override public void printSingleBitmapWithAlignCallBack(Bitmap bitmap, int alignments, InnerResultCallback callback) throws RemoteException
+            @Override public void printSingleBitmapWithAlignCallBack(Bitmap bitmap, int alignments, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5201,7 +5200,7 @@ public interface SunmiPrinterService extends IInterface {
              28 打印多个位图
              * 返回：
              */
-            @Override public void printMultiBitmapCallBack(List<Bitmap> bitmaps, InnerResultCallback callback) throws RemoteException
+            @Override public void printMultiBitmapCallBack(List<Bitmap> bitmaps, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5246,7 +5245,7 @@ public interface SunmiPrinterService extends IInterface {
              29 打印多个位图
              * 返回：
              */
-            @Override public void printMultiBitmapWithAlignCallBack(List<Bitmap> bitmaps, int alignments, InnerResultCallback callback) throws RemoteException
+            @Override public void printMultiBitmapWithAlignCallBack(List<Bitmap> bitmaps, int alignments, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5293,7 +5292,7 @@ public interface SunmiPrinterService extends IInterface {
              30 重置连接
              * 返回：
              */
-            @Override public void resetDeviceCallBack(InnerResultCallback callback) throws RemoteException
+            @Override public void resetDeviceCallBack(ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5336,7 +5335,7 @@ public interface SunmiPrinterService extends IInterface {
              31 全切 切纸
              * 返回：
              */
-            @Override public void fullCutCallBack(InnerResultCallback callback) throws RemoteException
+            @Override public void fullCutCallBack(ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5379,7 +5378,7 @@ public interface SunmiPrinterService extends IInterface {
              32  发送指令
              * 返回：
              */
-            @Override public void sendRAWDataCallBack(int[] ints, InnerResultCallback callback) throws RemoteException
+            @Override public void sendRAWDataCallBack(int[] ints, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5424,7 +5423,7 @@ public interface SunmiPrinterService extends IInterface {
              33  发送指令
              * 返回：
              */
-            @Override public void sendRAWDataStringCallBack(String hex, InnerResultCallback callback) throws RemoteException
+            @Override public void sendRAWDataStringCallBack(String hex, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5469,7 +5468,7 @@ public interface SunmiPrinterService extends IInterface {
              34  发送指令
              * 返回：
              */
-            @Override public void sendRAWDataByteCallBack(byte[] bytes, InnerResultCallback callback) throws RemoteException
+            @Override public void sendRAWDataByteCallBack(byte[] bytes, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5514,7 +5513,7 @@ public interface SunmiPrinterService extends IInterface {
              35  设置打印文字是否 下划线
              * 返回：
              */
-            @Override public void setUnderlineCallBack(boolean haveUnderline, InnerResultCallback callback) throws RemoteException
+            @Override public void setUnderlineCallBack(boolean haveUnderline, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5559,7 +5558,7 @@ public interface SunmiPrinterService extends IInterface {
              35  设置打印文字是否 加粗
              * 返回：
              */
-            @Override public void sethaveBoldCallBack(boolean haveBold, InnerResultCallback callback) throws RemoteException
+            @Override public void sethaveBoldCallBack(boolean haveBold, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5604,7 +5603,7 @@ public interface SunmiPrinterService extends IInterface {
              36  设置打印文字 行高
              * 返回：
              */
-            @Override public void setHaveLineHeightCallBack(float lineHeightRatio, InnerResultCallback callback) throws RemoteException
+            @Override public void setHaveLineHeightCallBack(float lineHeightRatio, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5649,7 +5648,7 @@ public interface SunmiPrinterService extends IInterface {
              37  发送指令
              * 返回：
              */
-            @Override public void printerByteWithByteCallBack(byte[] bytes, InnerResultCallback callback) throws RemoteException
+            @Override public void printerByteWithByteCallBack(byte[] bytes, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5694,7 +5693,7 @@ public interface SunmiPrinterService extends IInterface {
              37  发送指令
              * 返回：
              */
-            @Override public void printerByteCallBack(InnerResultCallback callback) throws RemoteException
+            @Override public void printerByteCallBack(ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5737,7 +5736,7 @@ public interface SunmiPrinterService extends IInterface {
              38  双qr大小
              * 返回：
              */
-            @Override public void setDoubleQRSizeCallBack(int size, InnerResultCallback callback) throws RemoteException
+            @Override public void setDoubleQRSizeCallBack(int size, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5782,7 +5781,7 @@ public interface SunmiPrinterService extends IInterface {
              39  双qr 左边边距
              * 返回：
              */
-            @Override public void setDoubleQR1MarginLeftCallBack(int left, InnerResultCallback callback) throws RemoteException
+            @Override public void setDoubleQR1MarginLeftCallBack(int left, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5827,7 +5826,7 @@ public interface SunmiPrinterService extends IInterface {
              40  双qr 左边边距
              * 返回：
              */
-            @Override public void setDoubleQR2MarginLeftCallBack(int left, InnerResultCallback callback) throws RemoteException
+            @Override public void setDoubleQR2MarginLeftCallBack(int left, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5872,7 +5871,7 @@ public interface SunmiPrinterService extends IInterface {
              41  双qr 误差
              * 返回：
              */
-            @Override public void setDoubleQR1LevelCallBack(int level, InnerResultCallback callback) throws RemoteException
+            @Override public void setDoubleQR1LevelCallBack(int level, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5917,7 +5916,7 @@ public interface SunmiPrinterService extends IInterface {
              42  双qr 误差
              * 返回：
              */
-            @Override public void setDoubleQR2LevelCallBack(int level, InnerResultCallback callback) throws RemoteException
+            @Override public void setDoubleQR2LevelCallBack(int level, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -5962,7 +5961,7 @@ public interface SunmiPrinterService extends IInterface {
              43  双qr 版本
              * 返回：
              */
-            @Override public void setDoubleQR1VersionCallBack(int version, InnerResultCallback callback) throws RemoteException
+            @Override public void setDoubleQR1VersionCallBack(int version, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -6007,7 +6006,7 @@ public interface SunmiPrinterService extends IInterface {
              44  双qr 版本
              * 返回：
              */
-            @Override public void setDoubleQR2VersionCallBack(int version, InnerResultCallback callback) throws RemoteException
+            @Override public void setDoubleQR2VersionCallBack(int version, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -6052,7 +6051,7 @@ public interface SunmiPrinterService extends IInterface {
              45 打印双QR
              * 返回：
              */
-            @Override public void printDoubleQRCallBack(String qr1,String qr2, InnerResultCallback callback) throws RemoteException
+            @Override public void printDoubleQRCallBack(String qr1,String qr2, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -6099,7 +6098,7 @@ public interface SunmiPrinterService extends IInterface {
              46 初始化参数
              * 返回：
              */
-            @Override public void initParamsCallBack(InnerResultCallback callback) throws RemoteException
+            @Override public void initParamsCallBack(ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -6142,7 +6141,7 @@ public interface SunmiPrinterService extends IInterface {
              47 初始化参数
              * 返回：
              */
-            @Override public void initParamsIsClearCallBack(boolean isClearCache, InnerResultCallback callback) throws RemoteException
+            @Override public void initParamsIsClearCallBack(boolean isClearCache, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -6187,7 +6186,7 @@ public interface SunmiPrinterService extends IInterface {
              * 48 获取全局⾏⾼设定值
              * 返回：
              */
-            @Override public int getForcedRowHeightCallBack(InnerResultCallback callback) throws RemoteException
+            @Override public int getForcedRowHeightCallBack(ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -6236,7 +6235,7 @@ public interface SunmiPrinterService extends IInterface {
              * 49 获取全局字体加粗样式使能
              * 返回：
              */
-            @Override public boolean isForcedBoldCallBack(InnerResultCallback callback) throws RemoteException
+            @Override public boolean isForcedBoldCallBack(ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -6285,7 +6284,7 @@ public interface SunmiPrinterService extends IInterface {
              * 50 获取全局字体下划线样式使能
              * 返回：
              */
-            @Override public boolean isForcedUnderlineCallBack(InnerResultCallback callback) throws RemoteException
+            @Override public boolean isForcedUnderlineCallBack(ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -6334,7 +6333,7 @@ public interface SunmiPrinterService extends IInterface {
              * 51 获取打印浓度
              * 返回：
              */
-            @Override public int getPrinterDensityCallBack(InnerResultCallback callback) throws RemoteException
+            @Override public int getPrinterDensityCallBack(ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();
@@ -6383,7 +6382,7 @@ public interface SunmiPrinterService extends IInterface {
              *  蓝牙打印初始化
              *
              */
-            @Override public void initBluePrinterCallBack(int anInt, BluetoothDevice device, InnerResultCallback callback) throws RemoteException
+            @Override public void initBluePrinterCallBack(int anInt, BluetoothDevice device, ICallback callback) throws RemoteException
             {
                 Parcel _data = Parcel.obtain();
                 Parcel _reply = Parcel.obtain();

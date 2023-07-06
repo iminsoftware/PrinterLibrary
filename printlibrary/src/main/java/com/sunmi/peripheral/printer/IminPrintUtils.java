@@ -116,7 +116,7 @@ public class IminPrintUtils {
     /**
      * send esc cmd
      */
-    public void sendRawData(byte[] data) {
+    public void sendRawData(int[] data) {
         if (printerService == null || initPrinter == false) {
             return;
         }
@@ -300,9 +300,9 @@ public class IminPrintUtils {
                         WoyouConsts.ENABLE : WoyouConsts.DISABLE);
             } catch (Exception e) {
                 if (isBold) {
-                    printerService.sendRAWData(ESCUtil.boldOn(), null);
+                    printerService.sendRAWDataByteCallBack(ESCUtil.boldOn(), null);
                 } else {
-                    printerService.sendRAWData(ESCUtil.boldOff(), null);
+                    printerService.sendRAWDataByteCallBack(ESCUtil.boldOff(), null);
                 }
             }
             try {
@@ -310,9 +310,9 @@ public class IminPrintUtils {
                         WoyouConsts.ENABLE : WoyouConsts.DISABLE);
             } catch (Exception e) {
                 if (isUnderLine) {
-                    printerService.sendRAWData(ESCUtil.underlineWithOneDotWidthOn(), null);
+                    printerService.sendRAWDataByteCallBack(ESCUtil.underlineWithOneDotWidthOn(), null);
                 } else {
-                    printerService.sendRAWData(ESCUtil.underlineOff(), null);
+                    printerService.sendRAWDataByteCallBack(ESCUtil.underlineOff(), null);
                 }
             }
             printerService.printTextWithFont(content, null, size, null);
